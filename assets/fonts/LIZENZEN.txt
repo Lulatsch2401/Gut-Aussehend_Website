@@ -1,0 +1,7 @@
+Schriften in diesem Ordner (alle lokal eingebunden, keine Verbindung zu Google Fonts)
+
+tilt-neon-400.woff2  – Tilt Neon, SIL Open Font License 1.1, Copyright 2019 The Tilt Project Authors
+figtree-var.woff2    – Figtree, SIL Open Font License 1.1, Copyright 2022 The Figtree Project Authors
+yellowtail-400.woff2 – Yellowtail, Apache License 2.0, Astigmatic
+
+Lizenztexte: https://openfontlicense.org und https://www.apache.org/licenses/LICENSE-2.0
