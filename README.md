@@ -82,11 +82,37 @@ Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" un
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
 - [ ] Entwurfsmodus entfernen: in `index.html` den Block zwischen `<!-- ENTWURF -->` löschen, die Klasse `show-ph` streichen und die Zeile `<meta name="robots" content="noindex">` in allen drei Seiten entfernen
+- [ ] Cloudflare Access wieder entfernen, sobald die Seite öffentlich sein soll
 - [ ] Rechnungsportal absichern, bevor Namen von Mitgliedern öffentlich auf der Seite stehen
 
-## Hosting
+## Hosting auf dem Raspberry Pi
 
-Die Seite läuft auf jedem statischen Webspace. Empfehlung: Cloudflare Pages oder Netlify mit der Domain gut-aussehend.de, das Rechnungsportal getrennt unter einer Subdomain.
+Die Seite läuft auf dem Pi in Docker: `nginx` liefert die Dateien aus, `cloudflared` macht sie über einen Cloudflare Tunnel unter gut-aussehend.de erreichbar. Am Router muss kein Port geöffnet werden. Alles dafür liegt in `deploy/`.
+
+### Einmalig: Cloudflare Tunnel anlegen
+
+1. Domain gut-aussehend.de bei Cloudflare hinzufügen (kostenloser Plan) und beim Domain-Anbieter die Nameserver auf die von Cloudflare umstellen.
+2. Im Cloudflare-Dashboard: Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared → Name `gut-aussehend` → Umgebung Docker. Aus dem angezeigten Befehl nur den langen Token kopieren.
+3. Im selben Tunnel unter „Public Hostname“ zwei Einträge anlegen: `gut-aussehend.de` und `www.gut-aussehend.de`, jeweils Typ HTTP, URL `web:80`.
+4. Auf dem Pi die Datei `~/gut-aussehend/.env` anlegen (kommt nie ins Repo):
+
+   ```bash
+   ssh 192.168.178.40 "mkdir -p gut-aussehend && echo 'TUNNEL_TOKEN=HIER_DEN_TOKEN' > gut-aussehend/.env && chmod 600 gut-aussehend/.env"
+   ```
+
+5. Solange die Seite noch Entwurf ist: Zero Trust → Access → Applications → Self-hosted → gut-aussehend.de, Policy „Allow“ mit den E-Mail-Adressen der Mitglieder. Dann sehen nur die freigegebenen Leute die Seite (Anmeldung per Code an die E-Mail).
+
+### Bei jeder Änderung
+
+Auf dem Mac im Repo-Ordner:
+
+```bash
+./deploy/deploy.sh 192.168.178.40
+```
+
+Das Skript überträgt die Dateien per `rsync` nach `~/gut-aussehend/site` auf dem Pi und startet die Container neu. Ohne Token in `.env` läuft nur der Webserver, erreichbar im Heimnetz unter http://192.168.178.40:8080. Nach Änderungen an CSS oder JS vorher die `?v=...`-Nummer hochsetzen (siehe oben).
+
+Das Rechnungsportal bleibt davon getrennt. Es kann später als eigener Public Hostname (z. B. `kasse.gut-aussehend.de`) in denselben Tunnel, aber erst, wenn der Login abgesichert ist.
 
 ## Herkunft der Fotos
 
