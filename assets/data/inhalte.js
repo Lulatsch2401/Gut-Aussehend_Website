@@ -8,10 +8,16 @@
      { name: "Musterfirma GmbH", logo: "assets/img/sponsoren/musterfirma.svg",
        url: "https://www.example.de", paket: "wagen" },
 
+   INSTAGRAM
+   follower: aktuelle Zahl, erscheint überall auf der Seite (Kennzahlen, Aufmacher, Sponsoren).
+   Ab und zu nachtragen, eine gerundete Zahl reicht.
+
    TERMINE
    offen: true zeigt den Hinweis "Termin folgt".
 */
 window.GA_INHALTE = {
+  instagram: { handle: "gut_und_aussehend", url: "https://www.instagram.com/gut_und_aussehend/", follower: 800 },
+
   sponsoren: [],
 
   termine: [

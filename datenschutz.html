@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-motto="matrix">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,9 +7,13 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#05152c">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site.css?v=20261024c">
 </head>
 <body>
+<script>
+  /* Gewählte Session vor dem ersten Zeichnen setzen, damit die Seite nicht kurz im falschen Look erscheint. */
+  try { var gaM = localStorage.getItem("ga-motto"); if (/^(matrix|wip|up)$/.test(gaM || "")) document.documentElement.setAttribute("data-motto", gaM); } catch (e) {}
+</script>
 <header class="site-head">
   <div class="wrap site-head__in">
     <a class="brand" href="index.html" aria-label="Gut und Aussehend, zur Startseite">

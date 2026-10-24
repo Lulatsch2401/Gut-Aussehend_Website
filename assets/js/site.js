@@ -1,4 +1,4 @@
-/* Gut und Aussehend – kleine Helfer für Menü, Termine, Sponsoren, Motto-Umschalter und Großansicht. */
+/* Gut und Aussehend – kleine Helfer für Menü, Termine, Sponsoren, Session-Auswahl und Großansicht. */
 (function () {
   "use strict";
   var doc = document;
@@ -26,6 +26,12 @@
         toggle.setAttribute("aria-expanded", "false");
       }
     });
+  }
+
+  /* ---- Instagram: Followerzahl aus inhalte.js ---- */
+  if (data.instagram && data.instagram.follower) {
+    var follower = Number(data.instagram.follower).toLocaleString("de-DE");
+    Array.prototype.slice.call(doc.querySelectorAll("[data-ig-follower]")).forEach(function (node) { node.textContent = follower; });
   }
 
   /* ---- Termine ---- */
@@ -67,50 +73,47 @@
     if (empty) empty.hidden = true;
   }
 
-  /* ---- Mottos im Wagen-Abschnitt umschalten ---- */
-  var mottoSection = doc.querySelector(".section--motto");
-  var switcher = doc.getElementById("motto-switch");
-  if (mottoSection && switcher) {
-    var panels = Array.prototype.slice.call(mottoSection.querySelectorAll(".motto"));
-    if (panels.length > 1) {
-      var tabs = [];
-      var tablist = el("div", "motto-switch__tabs");
-      tablist.setAttribute("role", "tablist");
-      tablist.setAttribute("aria-labelledby", "motto-switch-label");
-      var selectMotto = function (index, focus) {
-        panels.forEach(function (panel, i) {
-          var active = i === index;
-          panel.hidden = !active;
-          tabs[i].setAttribute("aria-selected", String(active));
-          tabs[i].tabIndex = active ? 0 : -1;
-        });
-        mottoSection.setAttribute("data-motto", panels[index].getAttribute("data-motto") || "");
-        if (focus) tabs[index].focus();
-      };
-      panels.forEach(function (panel, i) {
-        var tab = el("button");
-        tab.type = "button";
-        tab.id = "tab-" + panel.id;
-        tab.setAttribute("role", "tab");
-        tab.setAttribute("aria-controls", panel.id);
-        tab.appendChild(el("span", "", panel.getAttribute("data-year")));
-        tab.appendChild(doc.createTextNode(panel.getAttribute("data-title")));
-        tab.addEventListener("click", function () { selectMotto(i, false); });
-        tab.addEventListener("keydown", function (event) {
-          if (event.key === "ArrowRight") selectMotto((i + 1) % panels.length, true);
-          if (event.key === "ArrowLeft") selectMotto((i - 1 + panels.length) % panels.length, true);
-        });
-        panel.setAttribute("role", "tabpanel");
-        panel.setAttribute("aria-labelledby", tab.id);
-        tabs.push(tab);
-        tablist.appendChild(tab);
-      });
-      switcher.appendChild(tablist);
-      switcher.hidden = false;
-      /* Ein Link wie #wagen-2024 öffnet direkt das passende Motto. */
-      var wanted = panels.map(function (p) { return "#" + p.id; }).indexOf(window.location.hash);
-      selectMotto(wanted > -1 ? wanted : 0, false);
-    }
+  /* ---- Session-Auswahl: das Motto färbt die ganze Seite ----
+     data-motto am <html>-Element steuert Farben, Schrift und Deko (site.css, Abschnitt "Mottos").
+     Elemente mit data-for="..." erscheinen nur beim passenden Motto, z. B. das Bild im Aufmacher
+     und die Altstadttanz-Fotos desselben Jahres. */
+  var root = doc.documentElement;
+  var bar = doc.getElementById("motto-bar");
+  var mottoButtons = bar ? Array.prototype.slice.call(bar.querySelectorAll("button[data-motto]")) : [];
+  var mottoKeys = mottoButtons.map(function (b) { return b.getAttribute("data-motto"); });
+  var panels = Array.prototype.slice.call(doc.querySelectorAll(".motto"));
+  var themed = Array.prototype.slice.call(doc.querySelectorAll("[data-for]"));
+  var wagen = doc.querySelector(".section--motto");
+  var themeMeta = doc.querySelector('meta[name="theme-color"]');
+  var themeColors = { matrix: "#030a06", wip: "#151513", up: "#0e2b4f" };
+
+  var applyMotto = function (key, remember) {
+    if (mottoKeys.indexOf(key) < 0) key = mottoKeys[0];
+    if (!key) return;
+    root.setAttribute("data-motto", key);
+    if (wagen) wagen.setAttribute("data-motto", key);
+    mottoButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-motto") === key)); });
+    themed.forEach(function (node) { node.hidden = node.getAttribute("data-for").split(" ").indexOf(key) < 0; });
+    panels.forEach(function (panel) { panel.hidden = panel.getAttribute("data-motto") !== key; });
+    if (themeMeta && themeColors[key]) themeMeta.setAttribute("content", themeColors[key]);
+    if (remember) { try { localStorage.setItem("ga-motto", key); } catch (err) {} }
+  };
+
+  if (mottoButtons.length) {
+    mottoButtons.forEach(function (b) {
+      b.addEventListener("click", function () { applyMotto(b.getAttribute("data-motto"), true); });
+    });
+    /* Start: Link wie #wagen-2024 oder #2024, sonst die zuletzt gewählte Session, sonst die neueste. */
+    var start = root.getAttribute("data-motto");
+    var hash = window.location.hash.replace("#", "");
+    panels.forEach(function (panel) {
+      if (hash && (panel.id === hash || panel.getAttribute("data-year") === hash)) start = panel.getAttribute("data-motto");
+    });
+    /* Auch #altstadttanz-2024 wählt die passende Session (Altstadttanz-Jahr = Session-Jahr). */
+    themed.forEach(function (node) {
+      if (hash && node.id === hash) start = node.getAttribute("data-for").split(" ")[0];
+    });
+    applyMotto(start, false);
   }
 
   /* ---- Großansicht der Fotos ---- */
@@ -174,11 +177,11 @@
     });
   }
 
-  /* ---- Matrix-Band im Wagen-Abschnitt: der Code besteht wie am Wagen aus G, & und A ---- */
-  var code = doc.querySelector(".code");
-  if (code) {
+  /* ---- Matrix-Code: besteht wie am Wagen aus G, & und A ---- */
+  Array.prototype.slice.call(doc.querySelectorAll(".code")).forEach(function (code) {
     var glyphs = "G&A23G&A0G&A@";
-    var columns = Math.min(46, Math.max(14, Math.round(window.innerWidth / 30)));
+    var width = code.parentNode.getBoundingClientRect().width || window.innerWidth;
+    var columns = Math.min(40, Math.max(10, Math.round(width / 30)));
     for (var c = 0; c < columns; c++) {
       var line = "";
       for (var g = 0; g < 44; g++) line += glyphs.charAt(Math.floor(Math.random() * glyphs.length));
@@ -188,7 +191,24 @@
       span.style.opacity = (0.45 + Math.random() * 0.55).toFixed(2);
       code.appendChild(span);
     }
-  }
+  });
+
+  /* ---- Ballons für das Motto Up ---- */
+  Array.prototype.slice.call(doc.querySelectorAll(".balloons")).forEach(function (balloons) {
+    var colors = ["#ff5d73", "#ffd21f", "#4fc3f7", "#7ed957", "#c77dff", "#ff9f43"];
+    var count = balloons.parentNode.classList.contains("hero__deco") ? 12 : 14;
+    for (var b = 0; b < count; b++) {
+      var ball = el("span");
+      var size = 1.3 + Math.random() * 1.3;
+      ball.style.left = (3 + Math.random() * 94).toFixed(1) + "%";
+      ball.style.width = size.toFixed(2) + "rem";
+      ball.style.height = (size * 1.22).toFixed(2) + "rem";
+      ball.style.background = colors[b % colors.length];
+      ball.style.animationDuration = (14 + Math.random() * 12).toFixed(1) + "s";
+      ball.style.animationDelay = (-Math.random() * 20).toFixed(1) + "s";
+      balloons.appendChild(ball);
+    }
+  });
 
   /* ---- Entwurfsmodus: Platzhalter ein- und ausblenden ---- */
   var page = doc.querySelector(".page");

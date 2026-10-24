@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-motto="matrix">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -16,9 +16,13 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/tilt-neon-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site.css?v=20261024c">
 </head>
 <body>
+<script>
+  /* Gewählte Session vor dem ersten Zeichnen setzen, damit die Seite nicht kurz im falschen Look erscheint. */
+  try { var gaM = localStorage.getItem("ga-motto"); if (/^(matrix|wip|up)$/.test(gaM || "")) document.documentElement.setAttribute("data-motto", gaM); } catch (e) {}
+</script>
 <div class="page show-ph">
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
@@ -35,8 +39,17 @@
       <a href="#altstadttanz">Altstadttanz</a>
       <a href="#termine">Termine</a>
       <a href="#sponsoren">Sponsoren</a>
+      <a class="nav__ig" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" aria-label="Instagram: @gut_und_aussehend"><svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg><span>Instagram</span></a>
       <a class="btn btn--small" href="#sponsor-werden">Sponsor werden</a>
     </nav>
+  </div>
+  <div class="wrap motto-row">
+    <span class="motto-row__label" id="motto-row-label">Session</span>
+    <div class="motto-bar" id="motto-bar" role="group" aria-labelledby="motto-row-label">
+      <button type="button" data-motto="matrix" aria-pressed="true"><span>2026</span> Matrix</button>
+      <button type="button" data-motto="wip" aria-pressed="false"><span>2025</span> Work in Progress</button>
+      <button type="button" data-motto="up" aria-pressed="false"><span>2024</span> Up</button>
+    </div>
   </div>
 </header>
 
@@ -44,18 +57,27 @@
 
 <section class="hero" id="top">
   <div class="hero__media">
-    <img src="assets/img/hero-l.webp" srcset="assets/img/hero-s.webp 800w, assets/img/hero-l.webp 2200w" sizes="(min-width: 900px) 60vw, 100vw" width="2200" height="1650" fetchpriority="high" alt="Unser Wagen von hinten in der Abenddämmerung. Auf der Rückwand leuchtet grün der Schriftzug »Gut und Aussehend, Gefangen in der Matrix«.">
+    <img data-for="matrix" src="assets/img/hero-l.webp" srcset="assets/img/hero-s.webp 800w, assets/img/hero-l.webp 2200w" sizes="(min-width: 900px) 60vw, 100vw" width="2200" height="1650" fetchpriority="high" alt="Unser Wagen von hinten in der Abenddämmerung. Auf der Rückwand leuchtet grün der Schriftzug »Gut und Aussehend, Gefangen in der Matrix«.">
+    <img data-for="wip" hidden src="assets/img/w-gruppe-l.webp" srcset="assets/img/w-gruppe-s.webp 800w, assets/img/w-gruppe-l.webp 1600w" sizes="(min-width: 900px) 60vw, 100vw" width="1600" height="1066" alt="Der ganze Verein in Bauarbeiter-Kostümen mit gelben Helmen vor dem Baustellen-Wagen mit gelbem Kran, 2025.">
+    <img data-for="up" hidden src="assets/img/u-haus-l.webp" srcset="assets/img/u-haus-s.webp 800w, assets/img/u-haus-l.webp 1600w" sizes="(min-width: 900px) 60vw, 100vw" width="1600" height="1066" alt="Das lila Dach unseres Up-Hauses mit buntem Ballonstrauß am Schornstein in einer Altstadtstraße, 2024.">
+  </div>
+  <div class="hero__deco" aria-hidden="true">
+    <div class="code"></div>
+    <div class="balloons"></div>
   </div>
   <div class="wrap hero__in">
     <div class="hero__text">
       <p class="script">Since 2023</p>
       <h1 class="neon">Fasching, selbst gebaut.</h1>
       <p class="lead">Gut und Aussehend ist ein junger Faschingsverein. Wir denken uns jedes Jahr ein Motto aus, bauen dazu unseren Wagen und fahren damit bei den Umzügen in Groitzsch und Pegau mit.</p>
-      <a class="hero__proof" href="#wagen"><strong>3. Platz große Wagen</strong> Karnevalsumzug Pegau 2026</a>
+      <a class="hero__proof" href="#wagen" data-for="matrix"><strong>3. Platz große Wagen</strong> Karnevalsumzug Pegau 2026</a>
+      <a class="hero__proof" href="#wagen" data-for="wip" hidden><strong>Session 2025</strong> Unser Wagen: Work in Progress</a>
+      <a class="hero__proof" href="#wagen" data-for="up" hidden><strong>Session 2024</strong> Unser Wagen: Up</a>
       <div class="hero__cta">
         <a class="btn" href="#sponsor-werden">Sponsor werden</a>
         <a class="btn btn--ghost" href="#wagen">Den Wagen ansehen</a>
       </div>
+      <a class="hero__ig" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank"><svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg><span><strong>@gut_und_aussehend</strong> <span data-ig-follower>800</span> Follower auf Instagram</span></a>
     </div>
   </div>
 </section>
@@ -65,6 +87,7 @@
   <li><strong><span data-ph="Zahl prüfen">38</span></strong><span>Mitglieder</span></li>
   <li><strong>2</strong><span>Umzüge pro Session, in Groitzsch und Pegau</span></li>
   <li><strong>3. Platz</strong><span>große Wagen, Karnevalsumzug Pegau 2026</span></li>
+  <li class="facts__ig"><a href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank"><strong><span data-ig-follower>800</span></strong><span>Follower auf Instagram</span></a></li>
 </ul>
 
 <section class="section" id="verein">
@@ -85,8 +108,8 @@
         <a class="shot" href="assets/img/umzug-gruppe-l.webp" data-caption="Mit Fahne durch die Altstadt, Umzug 2026.">
           <img src="assets/img/umzug-gruppe-s.webp" srcset="assets/img/umzug-gruppe-s.webp 800w, assets/img/umzug-gruppe-l.webp 1400w" sizes="(min-width: 900px) 28vw, 50vw" width="1400" height="1867" loading="lazy" alt="Mitglieder in schwarzen Ledermänteln laufen im Umzug durch eine Altstadtgasse, dahinter weht die Vereinsfahne.">
         </a>
-        <a class="shot" href="assets/img/gruppe-wagen-l.webp" data-caption="Gruppenfoto vor dem Wagen, Umzug 2026.">
-          <img src="assets/img/gruppe-wagen-s.webp" srcset="assets/img/gruppe-wagen-s.webp 800w, assets/img/gruppe-wagen-l.webp 1600w" sizes="(min-width: 900px) 26vw, 50vw" width="1600" height="1131" loading="lazy" alt="Elf Frauen des Vereins in Kostümen stehen vor der Seitenwand des Wagens.">
+        <a class="shot" href="assets/img/verein-gruppe-l.webp" data-caption="Fast der ganze Verein vor unserer Palettenbühne, Altstadttanz 2025.">
+          <img src="assets/img/verein-gruppe-s.webp" srcset="assets/img/verein-gruppe-s.webp 800w, assets/img/verein-gruppe-l.webp 1600w" sizes="(min-width: 900px) 26vw, 50vw" width="1600" height="1066" loading="lazy" alt="Gruppenfoto des Vereins vor einer Bühne aus Holzpaletten mit dem Schriftzug Gut und Aussehend.">
         </a>
         <a class="shot" href="assets/img/umzug-publikum-l.webp" data-caption="Volle Straßen beim Umzug 2026.">
           <img src="assets/img/umzug-publikum-s.webp" srcset="assets/img/umzug-publikum-s.webp 800w, assets/img/umzug-publikum-l.webp 1400w" sizes="(min-width: 900px) 26vw, 50vw" width="1400" height="1867" loading="lazy" alt="Vier Mitglieder stehen auf der Straße, hinter ihnen dicht gedrängtes Publikum.">
@@ -94,10 +117,40 @@
       </div>
     </div>
 
-    <ul class="people ph-block" data-ph="Namen und Fotos nur mit Einverständnis">
-      <li class="person"><span class="person__pic" aria-hidden="true"></span><div><strong>Name folgt</strong><span>Vorsitz</span></div></li>
-      <li class="person"><span class="person__pic" aria-hidden="true"></span><div><strong>Name folgt</strong><span>Kasse</span></div></li>
-      <li class="person"><span class="person__pic" aria-hidden="true"></span><div><strong>Name folgt</strong><span>Ansprechpartner Sponsoring</span></div></li>
+    <div class="founders-head">
+      <p class="eyebrow">Seit 2023</p>
+      <h3 class="founders-title">Die Gründer</h3>
+      <p><span data-ph="Text prüfen">Angefangen hat alles 2023 mit vier Freunden und der Idee, einen eigenen Wagen zu bauen.</span></p>
+    </div>
+    <ul class="founders ph-block" data-ph="Fotos und Namen nur mit Einverständnis aller vier">
+      <li class="founder">
+        <a class="shot" href="assets/img/gruender-oli-l.webp" data-caption="Oli, Gründer von Gut und Aussehend.">
+          <img src="assets/img/gruender-oli-s.webp" srcset="assets/img/gruender-oli-s.webp 480w, assets/img/gruender-oli-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Oli. Lässig mit Sonnenbrille beim Altstadttanz, die Hand zum Gruß erhoben.">
+        </a>
+        <strong>Oli</strong>
+        <span data-ph="Rolle ergänzen">Gründer</span>
+      </li>
+      <li class="founder">
+        <a class="shot" href="assets/img/gruender-richard-l.webp" data-caption="Richard, Gründer von Gut und Aussehend.">
+          <img src="assets/img/gruender-richard-s.webp" srcset="assets/img/gruender-richard-s.webp 480w, assets/img/gruender-richard-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Richard. Im Bauarbeiter-Kostüm mit gelbem Helm, zeigt lachend in die Kamera.">
+        </a>
+        <strong>Richard</strong>
+        <span data-ph="Rolle ergänzen">Gründer</span>
+      </li>
+      <li class="founder">
+        <a class="shot" href="assets/img/gruender-robert-l.webp" data-caption="Robert, Gründer von Gut und Aussehend.">
+          <img src="assets/img/gruender-robert-s.webp" srcset="assets/img/gruender-robert-s.webp 480w, assets/img/gruender-robert-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Robert. Im Hawaiihemd mit einem Getränk beim Altstadttanz, zwinkert in die Kamera.">
+        </a>
+        <strong>Robert</strong>
+        <span data-ph="Rolle ergänzen">Gründer</span>
+      </li>
+      <li class="founder">
+        <a class="shot" href="assets/img/gruender-toni-l.webp" data-caption="Toni, Gründer von Gut und Aussehend.">
+          <img src="assets/img/gruender-toni-s.webp" srcset="assets/img/gruender-toni-s.webp 480w, assets/img/gruender-toni-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Toni. Mit gelbem Helm und roter Brille, hält stolz den Pokal in die Kamera.">
+        </a>
+        <strong>Toni</strong>
+        <span data-ph="Rolle ergänzen">Gründer</span>
+      </li>
     </ul>
   </div>
 </section>
@@ -105,11 +158,9 @@
 <section class="section section--band section--motto" id="wagen" data-motto="matrix">
   <div class="code" aria-hidden="true"></div>
   <div class="tape" aria-hidden="true"></div>
+  <div class="balloons" aria-hidden="true"></div>
   <div class="wrap">
-    <!-- Umschalter für die Mottos. Die Knöpfe baut site.js aus den Blöcken mit class="motto". -->
-    <div class="motto-switch" id="motto-switch" hidden>
-      <span class="motto-switch__label" id="motto-switch-label">Unsere Wagen</span>
-    </div>
+    <!-- Ein Block pro Motto. Welcher sichtbar ist, bestimmt die Session-Auswahl oben im Kopf. -->
 
     <!-- Motto 2026 -->
     <div class="motto" id="wagen-2026" data-motto="matrix" data-year="2026" data-title="Gefangen in der Matrix">
@@ -160,6 +211,18 @@
       <a class="shot" href="assets/img/fahne-wagen-l.webp" data-caption="Unsere Fahne auf dem Wagen.">
         <img src="assets/img/fahne-wagen-s.webp" srcset="assets/img/fahne-wagen-s.webp 800w, assets/img/fahne-wagen-l.webp 1400w" sizes="(min-width: 760px) 33vw, 50vw" width="1400" height="1867" loading="lazy" alt="Ein Mitglied schwenkt auf dem Wagen die Fahne mit dem Vereinslogo.">
       </a>
+      <a class="shot" href="assets/img/m-gruppe-l.webp" data-caption="Alle zusammen vor dem Matrix-Wagen.">
+        <img src="assets/img/m-gruppe-s.webp" srcset="assets/img/m-gruppe-s.webp 800w, assets/img/m-gruppe-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Gruppenfoto des Vereins in schwarzen Ledermänteln vor dem schwarz-grünen Matrix-Wagen.">
+      </a>
+      <a class="shot" href="assets/img/m-telefon-l.webp" data-caption="An der Telefonzelle.">
+        <img src="assets/img/m-telefon-s.webp" srcset="assets/img/m-telefon-s.webp 800w, assets/img/m-telefon-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Zwei Mitglieder in schwarzem Leder vor der Wagenwand mit grünem Code und der Telefonzelle.">
+      </a>
+      <a class="shot" href="assets/img/m-fahne-l.webp" data-caption="Mit Fahne durch Pegau.">
+        <img src="assets/img/m-fahne-s.webp" srcset="assets/img/m-fahne-s.webp 800w, assets/img/m-fahne-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Ein Mitglied im schwarzen Anzug schwenkt die Vereinsfahne über einer vollen Straße.">
+      </a>
+      <a class="shot" href="assets/img/m-schultern-l.webp" data-caption="Unterwegs im Umzug.">
+        <img src="assets/img/m-schultern-s.webp" srcset="assets/img/m-schultern-s.webp 800w, assets/img/m-schultern-l.webp 1365w" sizes="(min-width: 760px) 33vw, 50vw" width="1365" height="2048" loading="lazy" alt="Ein Mitglied trägt eine Frau in schwarzem Leder auf den Schultern durch die Altstadt.">
+      </a>
       <a class="shot" href="assets/img/fahne-l.webp" data-caption="Unsere Fahne.">
         <img src="assets/img/fahne-s.webp" srcset="assets/img/fahne-s.webp 800w, assets/img/fahne-l.webp 1400w" sizes="(min-width: 760px) 33vw, 50vw" width="1400" height="1437" loading="lazy" alt="Zwei Hände halten die dunkelblaue Vereinsfahne mit Maske und dem Schriftzug Gut und Aussehend, Since 2023.">
       </a>
@@ -169,17 +232,80 @@
     </div>
     </div>
 
-    <!-- Motto 2024. Für ein weiteres Jahr diesen Block kopieren und Jahr, Titel und Inhalt anpassen. -->
-    <div class="motto" id="wagen-2024" data-motto="wip" data-year="2024" data-title="Work in Progress">
+    <!-- Motto 2025 -->
+    <div class="motto" id="wagen-2025" data-motto="wip" data-year="2025" data-title="Work in Progress">
+      <div class="section__head">
+        <p class="eyebrow">Session 2025</p>
+        <h2 class="neon">Work in Progress</h2>
+        <p class="lead">2025 wurde unser Wagen zur Baustelle: gelber Kran mit Discokugel, Bauzaun, Warnschilder und überall gelbe Helme. <span data-ph="Text prüfen"></span></p>
+      </div>
+      <div class="feature feature--wide">
+        <a class="shot" href="assets/img/w-gruppe-l.webp" data-caption="Gruppenfoto 2025 vor dem Baustellen-Wagen.">
+          <img src="assets/img/w-gruppe-s.webp" srcset="assets/img/w-gruppe-s.webp 800w, assets/img/w-gruppe-l.webp 1600w" sizes="(min-width: 900px) 60vw, 100vw" width="1600" height="1066" loading="lazy" alt="Großes Gruppenfoto in Bauarbeiter-Kostümen mit gelben Helmen vor dem Wagen mit gelbem Kran, darüber Rauch.">
+        </a>
+      </div>
+      <div class="gallery">
+      <a class="shot" href="assets/img/w-kran-l.webp" data-caption="Der Kran mit Discokugel.">
+        <img src="assets/img/w-kran-s.webp" srcset="assets/img/w-kran-s.webp 800w, assets/img/w-kran-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Blick vom Wagen auf den gelben Kran mit Discokugel, darunter Mitglieder mit gelben Helmen.">
+      </a>
+      <a class="shot" href="assets/img/w-discokugel-l.webp" data-caption="Unter der Discokugel.">
+        <img src="assets/img/w-discokugel-s.webp" srcset="assets/img/w-discokugel-s.webp 800w, assets/img/w-discokugel-l.webp 913w" sizes="(min-width: 760px) 33vw, 50vw" width="913" height="1371" loading="lazy" alt="Ein Mitglied mit Helm und Sonnenbrille posiert unter der Discokugel, unten die Altstadt.">
+      </a>
+      <a class="shot" href="assets/img/w-kabine-l.webp" data-caption="Im Führerhaus des Krans.">
+        <img src="assets/img/w-kabine-s.webp" srcset="assets/img/w-kabine-s.webp 800w, assets/img/w-kabine-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Lachendes Mitglied mit Helm hebt beide Daumen im Führerhaus des gelben Krans.">
+      </a>
+      <a class="shot" href="assets/img/w-krandetail-l.webp" data-caption="Kran und Discokugel.">
+        <img src="assets/img/w-krandetail-s.webp" srcset="assets/img/w-krandetail-s.webp 800w, assets/img/w-krandetail-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Gelber Holzkran mit hängender Discokugel vor blauem Himmel.">
+      </a>
+      <a class="shot" href="assets/img/w-seite-l.webp" data-caption="Die Seite des Wagens.">
+        <img src="assets/img/w-seite-s.webp" srcset="assets/img/w-seite-s.webp 800w, assets/img/w-seite-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Seitenansicht des Baustellen-Wagens mit Kran, Bauzaun und aufgemaltem Bauarbeiter.">
+      </a>
+      <a class="shot" href="assets/img/w-schild-l.webp" data-caption="Baustellenausfahrt.">
+        <img src="assets/img/w-schild-s.webp" srcset="assets/img/w-schild-s.webp 800w, assets/img/w-schild-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Ein Mitglied hält ein Schild mit der Aufschrift Baustellenausfahrt in die Kamera.">
+      </a>
+      <a class="shot" href="assets/img/w-pokal-l.webp" data-caption="Mit Pokal, 2025.">
+        <img src="assets/img/w-pokal-s.webp" srcset="assets/img/w-pokal-s.webp 800w, assets/img/w-pokal-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Mitglied mit Helm und Latzhose hält lächelnd einen goldenen Pokal.">
+      </a>
+      </div>
+    </div>
+
+    <!-- Motto 2024. Für ein weiteres Jahr einen Block kopieren und Jahr, Titel und Inhalt anpassen. -->
+    <div class="motto" id="wagen-2024" data-motto="up" data-year="2024" data-title="Up">
       <div class="section__head">
         <p class="eyebrow">Session 2024</p>
-        <h2 class="neon">Work in Progress</h2>
-        <p class="lead">2024 hieß unser Motto »Work in Progress«. <span data-ph="Beschreibung des Wagens ergänzen"></span></p>
+        <h2 class="neon">Up</h2>
+        <p class="lead">2024 fuhren wir mit dem fliegenden Haus aus dem Film »Up«: bunte Fassade, lila Dach und ein Ballonstrauß am Schornstein. Dazu kamen Pfadfinder in Gelb und Carl im grauen Anzug. <span data-ph="Text prüfen"></span></p>
       </div>
-      <div class="soon ph-block" data-ph="Fotos vom Umzug 2024 fehlen noch">
-        <div class="soon__tile">Foto folgt</div>
-        <div class="soon__tile">Foto folgt</div>
-        <div class="soon__tile">Foto folgt</div>
+      <div class="feature feature--wide">
+        <a class="shot" href="assets/img/u-haus-l.webp" data-caption="Das Haus mit den Ballons, 2024.">
+          <img src="assets/img/u-haus-s.webp" srcset="assets/img/u-haus-s.webp 800w, assets/img/u-haus-l.webp 1600w" sizes="(min-width: 900px) 60vw, 100vw" width="1600" height="1066" loading="lazy" alt="Das lila Dach des Wagens mit buntem Ballonstrauß am Schornstein, dahinter eine Altstadtstraße.">
+        </a>
+      </div>
+      <div class="gallery">
+      <a class="shot" href="assets/img/u-umzug-l.webp" data-caption="Durch die Altstadt im Schnee.">
+        <img src="assets/img/u-umzug-s.webp" srcset="assets/img/u-umzug-s.webp 800w, assets/img/u-umzug-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Die Gruppe in gelben Pfadfinder-Kostümen zieht durch eine schneebedeckte Straße voller Zuschauer.">
+      </a>
+      <a class="shot" href="assets/img/u-treppe-l.webp" data-caption="Auf der Treppe des Hauses.">
+        <img src="assets/img/u-treppe-s.webp" srcset="assets/img/u-treppe-s.webp 800w, assets/img/u-treppe-l.webp 1365w" sizes="(min-width: 760px) 33vw, 50vw" width="1365" height="2048" loading="lazy" alt="Zwei Mitglieder steigen die Treppe des Hauses herab, oben der Ballonstrauß.">
+      </a>
+      <a class="shot" href="assets/img/u-russell-l.webp" data-caption="Pfadfinder mit Abzeichen.">
+        <img src="assets/img/u-russell-s.webp" srcset="assets/img/u-russell-s.webp 800w, assets/img/u-russell-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Lachendes Mitglied im gelben Pfadfinder-Hemd mit orangem Halstuch, dahinter das Haus mit Ballons.">
+      </a>
+      <a class="shot" href="assets/img/u-carl-l.webp" data-caption="Carl in voller Montur.">
+        <img src="assets/img/u-carl-s.webp" srcset="assets/img/u-carl-s.webp 800w, assets/img/u-carl-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Mitglied als Carl mit Fliege, runder Brille und grauem Sakko breitet die Arme aus.">
+      </a>
+      <a class="shot" href="assets/img/u-ballons-l.webp" data-caption="Ballons über der Menge.">
+        <img src="assets/img/u-ballons-s.webp" srcset="assets/img/u-ballons-s.webp 800w, assets/img/u-ballons-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Das Dach des Hauses mit Ballons über einer vollen Straße, im Hintergrund Rauch.">
+      </a>
+      <a class="shot" href="assets/img/u-fassade-l.webp" data-caption="Die bemalte Fassade.">
+        <img src="assets/img/u-fassade-s.webp" srcset="assets/img/u-fassade-s.webp 800w, assets/img/u-fassade-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Mitglied lehnt an der bunt bemalten Hausfassade mit Gartenzaun.">
+      </a>
+      <a class="shot" href="assets/img/u-wagen-l.webp" data-caption="Party auf dem Wagen.">
+        <img src="assets/img/u-wagen-s.webp" srcset="assets/img/u-wagen-s.webp 800w, assets/img/u-wagen-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Mitglieder in gelben Kostümen feiern mit Ballons auf dem Wagen.">
+      </a>
+      <a class="shot" href="assets/img/u-schild-l.webp" data-caption="Vorneweg mit Schild.">
+        <img src="assets/img/u-schild-s.webp" srcset="assets/img/u-schild-s.webp 800w, assets/img/u-schild-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Zwei Mitglieder in Warnwesten mit einem bunten Schild Gut und Aussehend vor dem Traktor.">
+      </a>
       </div>
     </div>
   </div>
@@ -188,44 +314,196 @@
 <section class="section" id="altstadttanz">
   <div class="wrap">
     <div class="section__head">
-      <p class="eyebrow">Im September</p>
+      <p class="eyebrow">Im September <span data-for="matrix">2026</span><span data-for="wip" hidden>2025</span><span data-for="up" hidden>2024</span></p>
       <h2 class="neon">Bar und Bühne beim Altstadttanz</h2>
       <p class="lead"><span data-ph="Text prüfen">Beim Altstadttanz haben wir unseren eigenen Bereich.</span> In den Tagen davor entstehen Bar, Bühne und Deko aus Paletten, Heuballen und viel Handarbeit.</p>
     </div>
 
+    <div class="year-panel" id="altstadttanz-2026" data-year-panel="2026" data-for="matrix">
     <div class="feature feature--wide">
-      <a class="shot" href="assets/img/at-buehne-l.webp" data-caption="Unsere Palettenbühne beim Altstadttanz 2025.">
-        <img src="assets/img/at-buehne-s.webp" srcset="assets/img/at-buehne-s.webp 800w, assets/img/at-buehne-l.webp 1600w" sizes="(min-width: 1180px) 1180px, 100vw" width="1600" height="900" loading="lazy" alt="Eine Bühne aus Holzpaletten in Form eines Dreiecks unter blauem Himmel, darüber Lampions und eine Discokugel.">
+      <a class="shot" href="assets/img/at26-buehne-nacht-l.webp" data-caption="Unsere Bühne bei Nacht, 2026.">
+        <img src="assets/img/at26-buehne-nacht-s.webp" srcset="assets/img/at26-buehne-nacht-s.webp 800w, assets/img/at26-buehne-nacht-l.webp 1600w" sizes="(min-width: 1180px) 1180px, 100vw" width="1600" height="1067" loading="lazy" alt="Die Palettenbühne mit G&amp;A-Schriftzug bei Nacht, Lichtstrahlen und Nebel, daneben Quallen-Deko aus Folie.">
       </a>
     </div>
 
     <div class="gallery">
-      <a class="shot" href="assets/img/at-bar-l.webp" data-caption="Die Bar 2025.">
-        <img src="assets/img/at-bar-s.webp" srcset="assets/img/at-bar-s.webp 800w, assets/img/at-bar-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="900" loading="lazy" alt="Eine Bar aus Paletten mit Papierblumen und dem Schriftzug G und A.">
+      <a class="shot" href="assets/img/at26-buehne-blau-l.webp" data-caption="Die Bühne in Blau, 2026.">
+        <img src="assets/img/at26-buehne-blau-s.webp" srcset="assets/img/at26-buehne-blau-s.webp 800w, assets/img/at26-buehne-blau-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Palettenbühne mit dem leuchtenden G&amp;A-Schriftzug in blauem Licht und Nebel.">
       </a>
-      <a class="shot" href="assets/img/aufbau-krug-l.webp" data-caption="Ein Bierkrug aus Heuballen, gebaut 2025.">
-        <img src="assets/img/aufbau-krug-s.webp" srcset="assets/img/aufbau-krug-s.webp 800w, assets/img/aufbau-krug-l.webp 1400w" sizes="(min-width: 760px) 33vw, 50vw" width="1400" height="1867" loading="lazy" alt="Ein riesiger Bierkrug aus gestapelten Heuballen mit weißer Schaumkrone, obenauf steht ein Mitglied.">
+      <a class="shot" href="assets/img/at26-laser-l.webp" data-caption="Laser über der Menge, 2026.">
+        <img src="assets/img/at26-laser-s.webp" srcset="assets/img/at26-laser-s.webp 800w, assets/img/at26-laser-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Grüne und blaue Laser über einer Menge, die vor der Bühne als Silhouette zu sehen ist.">
       </a>
-      <a class="shot" href="assets/img/at-abend-l.webp" data-caption="Abendstimmung 2024.">
-        <img src="assets/img/at-abend-s.webp" srcset="assets/img/at-abend-s.webp 800w, assets/img/at-abend-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Festgelände in der Dämmerung mit Lichterketten, Sand und einem Turm aus Paletten.">
+      <a class="shot" href="assets/img/at26-rot-l.webp" data-caption="Die Bühne in Rot, 2026.">
+        <img src="assets/img/at26-rot-s.webp" srcset="assets/img/at26-rot-s.webp 800w, assets/img/at26-rot-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Rot beleuchtete Palettenbühne mit Nebel, davor tanzende Gäste.">
       </a>
-      <a class="shot" href="assets/img/aufbau-heuballen-l.webp" data-caption="Aufbau 2025, Heuballen rollen.">
-        <img src="assets/img/aufbau-heuballen-s.webp" srcset="assets/img/aufbau-heuballen-s.webp 800w, assets/img/aufbau-heuballen-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Vier Mitglieder stemmen sich gemeinsam gegen einen großen Heuballen.">
+      <a class="shot" href="assets/img/at26-buehne-menge-l.webp" data-caption="Vor der Bühne, 2026.">
+        <img src="assets/img/at26-buehne-menge-s.webp" srcset="assets/img/at26-buehne-menge-s.webp 800w, assets/img/at26-buehne-menge-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Gäste stehen vor der blau beleuchteten Bühne mit Lampions und G&amp;A-Schriftzug.">
       </a>
-      <a class="shot" href="assets/img/at-nacht-l.webp" data-caption="Volles Gelände bei Nacht, 2024.">
-        <img src="assets/img/at-nacht-s.webp" srcset="assets/img/at-nacht-s.webp 800w, assets/img/at-nacht-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Besucher auf dem Festgelände bei Nacht unter bunten Lichterketten.">
+      <a class="shot" href="assets/img/at26-einhorn-l.webp" data-caption="Das Einhorn auf der Bühne, 2026.">
+        <img src="assets/img/at26-einhorn-s.webp" srcset="assets/img/at26-einhorn-s.webp 800w, assets/img/at26-einhorn-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Eine Person mit Einhornmaske und Leuchtstab auf der Bühne, dahinter die Menge bei Nacht.">
+      </a>
+      <a class="shot" href="assets/img/at26-nebel-l.webp" data-caption="Nebel und Spots, 2026.">
+        <img src="assets/img/at26-nebel-s.webp" srcset="assets/img/at26-nebel-s.webp 800w, assets/img/at26-nebel-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Scheinwerfer und Nebel über der Tanzfläche, Gäste als Silhouetten.">
+      </a>
+      <a class="shot" href="assets/img/at26-buehne-gruen-l.webp" data-caption="Grün und Violett, 2026.">
+        <img src="assets/img/at26-buehne-gruen-s.webp" srcset="assets/img/at26-buehne-gruen-s.webp 800w, assets/img/at26-buehne-gruen-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Bühne in grünem und violettem Licht, davor die Menge.">
+      </a>
+      <a class="shot" href="assets/img/at26-einhorn-pult-l.webp" data-caption="Blick vom Pult, 2026.">
+        <img src="assets/img/at26-einhorn-pult-s.webp" srcset="assets/img/at26-einhorn-pult-s.webp 800w, assets/img/at26-einhorn-pult-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Das Einhorn mit Fahne am DJ-Pult, davor eine große Menge im blauen Licht.">
+      </a>
+      <a class="shot" href="assets/img/at26-lichterketten-l.webp" data-caption="Lichterketten und Lampions, 2026.">
+        <img src="assets/img/at26-lichterketten-s.webp" srcset="assets/img/at26-lichterketten-s.webp 800w, assets/img/at26-lichterketten-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Bühne zwischen Lichterketten und Lampions, Nebel in Blau und Violett.">
+      </a>
+      <a class="shot" href="assets/img/at26-gruen-l.webp" data-caption="Grüner Nebel, 2026.">
+        <img src="assets/img/at26-gruen-s.webp" srcset="assets/img/at26-gruen-s.webp 800w, assets/img/at26-gruen-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Bühne in grünem Licht und Nebel, davor dunkle Silhouetten.">
+      </a>
+      <a class="shot" href="assets/img/at26-dj-buehne-l.webp" data-caption="Das DJ-Pult unter dem Segel, 2026.">
+        <img src="assets/img/at26-dj-buehne-s.webp" srcset="assets/img/at26-dj-buehne-s.webp 800w, assets/img/at26-dj-buehne-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die DJ-Bühne mit G&amp;A-Schriftzug, Sonnensegel und Lichterketten.">
+      </a>
+      <a class="shot" href="assets/img/at26-daemmerung-l.webp" data-caption="Erstes Licht in der Dämmerung, 2026.">
+        <img src="assets/img/at26-daemmerung-s.webp" srcset="assets/img/at26-daemmerung-s.webp 800w, assets/img/at26-daemmerung-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Bühne in der Dämmerung mit violetten Spots und Nebel.">
+      </a>
+      <a class="shot" href="assets/img/at26-team-nacht-l.webp" data-caption="Die Truppe nachts vor der Bühne, 2026.">
+        <img src="assets/img/at26-team-nacht-s.webp" srcset="assets/img/at26-team-nacht-s.webp 800w, assets/img/at26-team-nacht-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Vereinsmitglieder als Gruppe vor der beleuchteten Bühne.">
+      </a>
+      <a class="shot" href="assets/img/at26-team-l.webp" data-caption="Gruppenbild vor dem Start, 2026.">
+        <img src="assets/img/at26-team-s.webp" srcset="assets/img/at26-team-s.webp 800w, assets/img/at26-team-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die Vereinsmitglieder vor der Palettenbühne mit G&amp;A-Schriftzug bei Sonnenschein.">
+      </a>
+      <a class="shot" href="assets/img/at26-schild-l.webp" data-caption="Der Schriftzug, 2026.">
+        <img src="assets/img/at26-schild-s.webp" srcset="assets/img/at26-schild-s.webp 800w, assets/img/at26-schild-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Großer G&amp;A-Schriftzug aus Holz auf der Palettenwand vor blauem Himmel.">
+      </a>
+      <a class="shot" href="assets/img/at26-aufbau-l.webp" data-caption="Aufbau 2026.">
+        <img src="assets/img/at26-aufbau-s.webp" srcset="assets/img/at26-aufbau-s.webp 800w, assets/img/at26-aufbau-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1067" loading="lazy" alt="Die halb fertige Palettenbühne mit Gerüst und Sonnensegel.">
+      </a>
+    </div>
+    </div>
+
+    <div class="year-panel" id="altstadttanz-2025" data-year-panel="2025" data-for="wip" hidden>
+    <div class="feature feature--wide">
+      <a class="shot" href="assets/img/at25-drohne-l.webp" data-caption="Unsere Bühne bei Nacht, von oben, 2025.">
+        <img src="assets/img/at25-drohne-s.webp" srcset="assets/img/at25-drohne-s.webp 800w, assets/img/at25-drohne-l.webp 1600w" sizes="(min-width: 1180px) 1180px, 100vw" width="1600" height="1198" loading="lazy" alt="Luftaufnahme bei Nacht: die Palettenbühne in Dreiecksform mit Lichterketten, darunter eine dichte Menge im blauen Licht.">
+      </a>
+    </div>
+
+    <div class="gallery">
+      <a class="shot" href="assets/img/at25-drohne2-l.webp" data-caption="Die Bühne von oben, 2025.">
+        <img src="assets/img/at25-drohne2-s.webp" srcset="assets/img/at25-drohne2-s.webp 800w, assets/img/at25-drohne2-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1198" loading="lazy" alt="Luftaufnahme bei Nacht: die beleuchtete Palettenbühne in Dreiecksform, davor eine dichte Menge im violetten Licht.">
+      </a>
+      <a class="shot" href="assets/img/at25-menge-l.webp" data-caption="Volle Fläche vor der Bühne, 2025.">
+        <img src="assets/img/at25-menge-s.webp" srcset="assets/img/at25-menge-s.webp 800w, assets/img/at25-menge-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Eine große, feiernde Menge bei Nacht unter Lampions und Lichterketten.">
+      </a>
+      <a class="shot" href="assets/img/at25-buehne-nacht-l.webp" data-caption="Die Bühne im blauen Licht, 2025.">
+        <img src="assets/img/at25-buehne-nacht-s.webp" srcset="assets/img/at25-buehne-nacht-s.webp 800w, assets/img/at25-buehne-nacht-l.webp 1365w" sizes="(min-width: 760px) 33vw, 50vw" width="1365" height="2048" loading="lazy" alt="Zwei Gäste vor der blau beleuchteten Palettenbühne mit dem Schriftzug Gut und Aussehend.">
+      </a>
+      <a class="shot" href="assets/img/at25-blasen-l.webp" data-caption="Seifenblasen über der Menge, 2025.">
+        <img src="assets/img/at25-blasen-s.webp" srcset="assets/img/at25-blasen-s.webp 800w, assets/img/at25-blasen-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Hunderte Seifenblasen schweben über einer feiernden Menge bei Nacht.">
+      </a>
+      <a class="shot" href="assets/img/at25-pult-l.webp" data-caption="Blick vom DJ-Pult, 2025.">
+        <img src="assets/img/at25-pult-s.webp" srcset="assets/img/at25-pult-s.webp 800w, assets/img/at25-pult-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Blick vom DJ-Pult über Blumendeko und Nebel auf die jubelnde Menge.">
+      </a>
+      <a class="shot" href="assets/img/at25-dj-l.webp" data-caption="Am DJ-Pult, 2025.">
+        <img src="assets/img/at25-dj-s.webp" srcset="assets/img/at25-dj-s.webp 800w, assets/img/at25-dj-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Zwei DJs mit erhobenen Armen im Pult, eingerahmt von Paletten und Hortensien.">
+      </a>
+      <a class="shot" href="assets/img/at-buehne-l.webp" data-caption="Die Palettenbühne bei Tag, 2025.">
+        <img src="assets/img/at-buehne-s.webp" srcset="assets/img/at-buehne-s.webp 800w, assets/img/at-buehne-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="900" loading="lazy" alt="Eine Bühne aus Holzpaletten in Form eines Dreiecks unter blauem Himmel, darüber Lampions und eine Discokugel.">
+      </a>
+      <a class="shot" href="assets/img/at-aperol-l.webp" data-caption="Unsere Bar 2025.">
+        <img src="assets/img/at-aperol-s.webp" srcset="assets/img/at-aperol-s.webp 800w, assets/img/at-aperol-l.webp 1365w" sizes="(min-width: 760px) 33vw, 50vw" width="1365" height="2048" loading="lazy" alt="Bar aus Paletten mit Papierblumen und den Buchstaben G und A vor blauem Himmel.">
       </a>
       <a class="shot" href="assets/img/at-team-l.webp" data-caption="Am Tresen, 2025.">
         <img src="assets/img/at-team-s.webp" srcset="assets/img/at-team-s.webp 800w, assets/img/at-team-l.webp 1400w" sizes="(min-width: 760px) 33vw, 50vw" width="1400" height="1867" loading="lazy" alt="Ein lachendes Mitglied lehnt am Tresen, im Hintergrund ein Palettenturm mit dem Vereinsbanner.">
       </a>
-      <a class="shot" href="assets/img/aufbau-deko-l.webp" data-caption="Bänder für die Deko, Aufbau 2025.">
-        <img src="assets/img/aufbau-deko-s.webp" srcset="assets/img/aufbau-deko-s.webp 800w, assets/img/aufbau-deko-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Mitglieder binden bunte Bänder an einen Holzmast auf einer Wiese.">
+      <a class="shot" href="assets/img/aufbau-krug-l.webp" data-caption="Ein Bierkrug aus Heuballen, gebaut 2025.">
+        <img src="assets/img/aufbau-krug-s.webp" srcset="assets/img/aufbau-krug-s.webp 800w, assets/img/aufbau-krug-l.webp 1400w" sizes="(min-width: 760px) 33vw, 50vw" width="1400" height="1867" loading="lazy" alt="Ein riesiger Bierkrug aus gestapelten Heuballen mit weißer Schaumkrone, obenauf steht ein Mitglied.">
+      </a>
+      <a class="shot" href="assets/img/aufbau-heuballen-l.webp" data-caption="Aufbau 2025, Heuballen rollen.">
+        <img src="assets/img/aufbau-heuballen-s.webp" srcset="assets/img/aufbau-heuballen-s.webp 800w, assets/img/aufbau-heuballen-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Vier Mitglieder stemmen sich gemeinsam gegen einen großen Heuballen.">
+      </a>
+      <a class="shot" href="assets/img/aufbau-stapler-l.webp" data-caption="Material kommt per Gabelstapler, Aufbau 2025.">
+        <img src="assets/img/aufbau-stapler-s.webp" srcset="assets/img/aufbau-stapler-s.webp 800w, assets/img/aufbau-stapler-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Ein Mitglied fährt einen gelben Gabelstapler neben einem Anhänger voller Bauzäune.">
+      </a>
+    </div>
+    </div>
+
+    <div class="year-panel" id="altstadttanz-2024" data-year-panel="2024" data-for="up" hidden>
+    <div class="feature feature--wide">
+      <a class="shot" href="assets/img/at24-buehne-l.webp" data-caption="Unsere Bühne zur blauen Stunde, 2024.">
+        <img src="assets/img/at24-buehne-s.webp" srcset="assets/img/at24-buehne-s.webp 800w, assets/img/at24-buehne-l.webp 1600w" sizes="(min-width: 1180px) 1180px, 100vw" width="1600" height="1066" loading="lazy" alt="Die beleuchtete Palettenbühne mit DJ-Pult und Vereinsschild in der Dämmerung, darüber Lichterketten.">
+      </a>
+    </div>
+
+    <div class="gallery">
+      <a class="shot" href="assets/img/at24-dj-buehne-l.webp" data-caption="Die DJ-Bühne bei Nacht, 2024.">
+        <img src="assets/img/at24-dj-buehne-s.webp" srcset="assets/img/at24-dj-buehne-s.webp 800w, assets/img/at24-dj-buehne-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Die Palettenbühne mit DJ-Pult, Lichterketten und dem bunten Vereinsschild bei Nacht.">
+      </a>
+      <a class="shot" href="assets/img/at24-menge-l.webp" data-caption="Vom Pult in die Menge, 2024.">
+        <img src="assets/img/at24-menge-s.webp" srcset="assets/img/at24-menge-s.webp 800w, assets/img/at24-menge-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Blick über die Schulter des DJs auf eine Menge im Nebel unter Lichterketten.">
+      </a>
+      <a class="shot" href="assets/img/at24-nebel-l.webp" data-caption="Nebel und Licht vor der Bühne, 2024.">
+        <img src="assets/img/at24-nebel-s.webp" srcset="assets/img/at24-nebel-s.webp 800w, assets/img/at24-nebel-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Pinkes Licht und Nebel über der Bühne, davor die Silhouetten der Gäste.">
+      </a>
+      <a class="shot" href="assets/img/at24-dj-l.webp" data-caption="Am Pult, 2024.">
+        <img src="assets/img/at24-dj-s.webp" srcset="assets/img/at24-dj-s.webp 800w, assets/img/at24-dj-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Ein DJ mit Kopfhörern zeigt lachend in die Menge, im Hintergrund rotes Licht und Nebel.">
+      </a>
+      <a class="shot" href="assets/img/at24-gelaende-l.webp" data-caption="Das Gelände bei Nacht, 2024.">
+        <img src="assets/img/at24-gelaende-s.webp" srcset="assets/img/at24-gelaende-s.webp 800w, assets/img/at24-gelaende-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Gäste als Silhouetten vor beleuchteten Palettenständen, Lichterketten und Nebel.">
+      </a>
+      <a class="shot" href="assets/img/at24-gaeste-l.webp" data-caption="Gäste vor dem Pult, 2024.">
+        <img src="assets/img/at24-gaeste-s.webp" srcset="assets/img/at24-gaeste-s.webp 800w, assets/img/at24-gaeste-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Drei lachende Gäste vor dem blau und rot beleuchteten DJ-Pult.">
+      </a>
+      <a class="shot" href="assets/img/at24-team-l.webp" data-caption="Die Truppe vor der Bühne, 2024.">
+        <img src="assets/img/at24-team-s.webp" srcset="assets/img/at24-team-s.webp 800w, assets/img/at24-team-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="899" loading="lazy" alt="Die Vereinsmitglieder stehen als Gruppe vor der Palettenbühne mit dem Vereinsschild.">
+      </a>
+      <a class="shot" href="assets/img/at24-tag-l.webp" data-caption="Die Bühne am Nachmittag, 2024.">
+        <img src="assets/img/at24-tag-s.webp" srcset="assets/img/at24-tag-s.webp 800w, assets/img/at24-tag-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Palettenbühne mit Vereinsschild und großen Boxen am Nachmittag.">
+      </a>
+      <a class="shot" href="assets/img/at24-nebel-tag-l.webp" data-caption="Nebelmaschine an, 2024.">
+        <img src="assets/img/at24-nebel-tag-s.webp" srcset="assets/img/at24-nebel-tag-s.webp 800w, assets/img/at24-nebel-tag-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1066" loading="lazy" alt="Die Palettenbühne von unten, aus der Nebel quillt, oben legt der DJ auf.">
+      </a>
+      <a class="shot" href="assets/img/at-abend-l.webp" data-caption="Abendstimmung 2024.">
+        <img src="assets/img/at-abend-s.webp" srcset="assets/img/at-abend-s.webp 800w, assets/img/at-abend-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Festgelände in der Dämmerung mit Lichterketten, Sand und einem Turm aus Paletten.">
+      </a>
+      <a class="shot" href="assets/img/at-nacht-l.webp" data-caption="Volles Gelände bei Nacht, 2024.">
+        <img src="assets/img/at-nacht-s.webp" srcset="assets/img/at-nacht-s.webp 800w, assets/img/at-nacht-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Besucher auf dem Festgelände bei Nacht unter bunten Lichterketten.">
       </a>
       <a class="shot" href="assets/img/at-pult-l.webp" data-caption="Beleuchteter Stand am Abend, 2024.">
         <img src="assets/img/at-pult-s.webp" srcset="assets/img/at-pult-s.webp 800w, assets/img/at-pult-l.webp 1200w" sizes="(min-width: 760px) 33vw, 50vw" width="1200" height="2133" loading="lazy" alt="Ein rot beleuchteter Stand aus Paletten mit Lichterkette in der Abenddämmerung.">
       </a>
-      <a class="shot" href="assets/img/aufbau-stapler-l.webp" data-caption="Material kommt per Gabelstapler.">
-        <img src="assets/img/aufbau-stapler-s.webp" srcset="assets/img/aufbau-stapler-s.webp 800w, assets/img/aufbau-stapler-l.webp 1600w" sizes="(min-width: 760px) 33vw, 50vw" width="1600" height="1200" loading="lazy" alt="Ein Mitglied fährt einen gelben Gabelstapler neben einem Anhänger voller Bauzäune.">
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="section ig" id="instagram">
+  <div class="wrap ig__in">
+    <div class="ig__text">
+      <p class="eyebrow">Folgt uns</p>
+      <h2 class="neon">Das ganze Jahr auf Instagram</h2>
+      <p class="lead">Wagenbau, Kostümproben, Umzüge und Altstadttanz: Auf Instagram zeigen wir, was zwischen den Terminen passiert. <span data-ig-follower>800</span> Leute folgen uns schon.</p>
+      <p class="ig__handle"><svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg><span>@gut_und_aussehend</span></p>
+      <div class="hero__cta">
+        <a class="btn" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank">Auf Instagram folgen</a>
+      </div>
+      <p class="small note">Der Link öffnet Instagram. Auf dieser Seite selbst laden wir nichts von Instagram nach.</p>
+    </div>
+    <div class="ig-grid">
+      <a class="ig-grid__tile" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
+        <img src="assets/img/at26-laser-s.webp" width="800" height="800" loading="lazy" alt="">
+      </a>
+      <a class="ig-grid__tile" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
+        <img src="assets/img/m-fahne-s.webp" width="800" height="800" loading="lazy" alt="">
+      </a>
+      <a class="ig-grid__tile" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
+        <img src="assets/img/w-kran-s.webp" width="800" height="800" loading="lazy" alt="">
+      </a>
+      <a class="ig-grid__tile" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
+        <img src="assets/img/at25-drohne-s.webp" width="800" height="800" loading="lazy" alt="">
+      </a>
+      <a class="ig-grid__tile" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
+        <img src="assets/img/u-ballons-s.webp" width="800" height="800" loading="lazy" alt="">
+      </a>
+      <a class="ig-grid__tile" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
+        <img src="assets/img/at24-dj-buehne-s.webp" width="800" height="800" loading="lazy" alt="">
       </a>
     </div>
   </div>
@@ -278,42 +556,9 @@
       </li>
       <li>
         <h3>Sichtbar das ganze Jahr</h3>
-        <p>Ihr Logo steht auf dieser Website und an unserer Bar beim Altstadttanz. <span data-ph="Social-Media-Kanäle ergänzen"></span></p>
+        <p>Ihr Logo steht auf dieser Website, an unserer Bar beim Altstadttanz und in unseren Beiträgen auf <a href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank">Instagram</a>, wo uns <span data-ig-follower>800</span> Leute folgen.</p>
       </li>
     </ul>
-
-    <div class="packs ph-block" data-ph="Vorschlag: Pakete und Beträge legt der Vorstand fest">
-      <article class="pack">
-        <h3>Wurfmaterial</h3>
-        <p class="pack__price">Betrag folgt</p>
-        <ul>
-          <li>Logo und Link auf dieser Website</li>
-          <li>Nennung in unserem Dank zur Session</li>
-        </ul>
-        <a class="btn btn--ghost btn--small" href="#kontakt">Anfragen</a>
-      </article>
-      <article class="pack">
-        <h3>Kostüm</h3>
-        <p class="pack__price">Betrag folgt</p>
-        <ul>
-          <li>Alles aus dem Paket Wurfmaterial</li>
-          <li>Logo auf dem Sponsorenbanner am Wagen</li>
-          <li>Logo an unserer Bar beim Altstadttanz</li>
-        </ul>
-        <a class="btn btn--ghost btn--small" href="#kontakt">Anfragen</a>
-      </article>
-      <article class="pack pack--main">
-        <h3>Wagen</h3>
-        <p class="pack__price">Betrag folgt</p>
-        <ul>
-          <li>Alles aus dem Paket Kostüm</li>
-          <li>Großes Logo gut sichtbar am Wagen</li>
-          <li>Nennung als Hauptsponsor der Session</li>
-          <li>Ihr Wurfmaterial fliegt von unserem Wagen</li>
-        </ul>
-        <a class="btn btn--small" href="#kontakt">Anfragen</a>
-      </article>
-    </div>
 
     <h3 class="subhead">Wofür wir das Geld brauchen</h3>
     <ul class="spend">
@@ -323,6 +568,9 @@
       <li>Licht und Ton</li>
       <li>Gestaltung und Deko</li>
     </ul>
+    <div class="hero__cta sponsor-cta">
+      <a class="btn" href="#kontakt">Jetzt anfragen</a>
+    </div>
     <p class="small note"><span data-ph="hängt an der Rechtsform">Ob wir Spendenquittungen ausstellen können, klären wir gerade.</span></p>
   </div>
 </section>
@@ -346,6 +594,7 @@
           <button class="copy" id="mail-kopieren" type="button">Adresse kopieren</button>
         </div>
         <p class="small"><span data-ph="Ansprechpartner eintragen">Ansprechpartner: Name folgt</span></p>
+        <a class="contact__ig" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank"><svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg><span>Oder per Direktnachricht an <strong>@gut_und_aussehend</strong></span></a>
       </div>
     </div>
   </div>
@@ -359,7 +608,7 @@
     <nav aria-label="Rechtliches und Kanäle">
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
-      <span data-ph="Link ergänzen">Instagram</span>
+      <a class="foot__ig" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank"><svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg><span>Instagram</span></a>
     </nav>
   </div>
 </footer>
@@ -384,7 +633,7 @@
 <!-- ENTWURF Ende -->
 
 </div>
-<script src="assets/data/inhalte.js"></script>
-<script src="assets/js/site.js"></script>
+<script src="assets/data/inhalte.js?v=20261024c"></script>
+<script src="assets/js/site.js?v=20261024c"></script>
 </body>
 </html>
