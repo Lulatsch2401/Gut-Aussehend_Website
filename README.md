@@ -151,7 +151,7 @@ Alle Fotos stammen aus dem Google-Drive-Ordner `Fasching` (Auswahl in `Fasching/
 | wagen-umzug | Faschingsumzüge 2026/IMG_8449.HEIC |
 | umzug-gruppe | Faschingsumzüge 2026/IMG_8515.HEIC |
 | gruppe-wagen | Faschingsumzüge 2026/IMG_0314.HEIC (Ausschnitt) |
-| umzug-publikum | Faschingsumzüge 2026/IMG_8480.HEIC |
+| umzug-strasse | Faschingsumzüge 2026/591-DSC_7633.jpg (Ausschnitt 4:3) |
 | fahne-wagen | Faschingsumzüge 2026/IMG_8490.HEIC |
 | fahne | Faschingsumzüge 2026/IMG_8651.HEIC (Ausschnitt) |
 | pokal | Faschingsumzüge 2026/IMG_8564.HEIC (Ausschnitt) |
