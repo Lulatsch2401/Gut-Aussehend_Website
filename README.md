@@ -87,18 +87,18 @@ Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" un
 
 ## Hosting auf dem Raspberry Pi
 
-Die Seite läuft auf dem Pi in Docker: `nginx` liefert die Dateien aus, `cloudflared` macht sie über einen Cloudflare Tunnel unter gut-aussehend.de erreichbar. Am Router muss kein Port geöffnet werden. Alles dafür liegt in `deploy/`.
+Die Seite läuft auf dem Pi 192.168.178.25 direkt mit nginx (ohne Docker) unter `/var/www/gut-aussehend`, im Heimnetz auf Port 8090. Öffentlich erreichbar ist sie über den Cloudflare Tunnel, der dort schon für `auslagen.gut-aussehend.de` läuft. Alles für den Pi liegt in `deploy/`: `deploy.sh` und die nginx-Vorlage `nginx.conf`.
 
-### Einmalig: Cloudflare Tunnel anlegen
+### Einmalig: Domain im Tunnel eintragen
 
-1. Domain gut-aussehend.de bei Cloudflare hinzufügen (kostenloser Plan) und beim Domain-Anbieter die Nameserver auf die von Cloudflare umstellen.
-2. Im Cloudflare-Dashboard: Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared → Name `gut-aussehend` → Umgebung Docker. Aus dem angezeigten Befehl nur den langen Token kopieren.
-3. Im selben Tunnel unter „Public Hostname“ zwei Einträge anlegen: `gut-aussehend.de` und `www.gut-aussehend.de`, jeweils Typ HTTP, URL `web:80`.
-4. Auf dem Pi die Datei `~/gut-aussehend/.env` anlegen (kommt nie ins Repo):
+Cloudflare → Zero Trust → Networks → Tunnels → vorhandener Tunnel → Public Hostname → zwei Einträge:
 
-   ```bash
-   ssh 192.168.178.25 "mkdir -p gut-aussehend && echo 'TUNNEL_TOKEN=HIER_DEN_TOKEN' > gut-aussehend/.env && chmod 600 gut-aussehend/.env"
-   ```
+| Subdomain | Domain | Service |
+|---|---|---|
+| (leer) | gut-aussehend.de | HTTP `192.168.178.25:8090` |
+| www | gut-aussehend.de | HTTP `192.168.178.25:8090` |
+
+Den Eintrag für `auslagen` nicht ändern. Unter SSL/TLS → Edge Certificates „Always Use HTTPS“ einschalten. In der FritzBox dem Pi eine feste IP geben.
 
 ### Passwortschutz
 
@@ -109,7 +109,7 @@ Solange die Seite Entwurf ist, fragt sie beim Aufruf nach Benutzername und Passw
 - Für den echten Start abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
 - Ohne Option bleibt es, wie es ist.
 
-Auf dem Pi liegt nur ein Hash des Passworts (`~/gut-aussehend/ga-htpasswd`), nie im Repo. In Cloudflare unter SSL/TLS „Always Use HTTPS“ einschalten, damit das Passwort nur verschlüsselt übertragen wird.
+Auf dem Pi liegt nur ein Hash des Passworts (`/var/www/gut-aussehend/htpasswd`, außerhalb der ausgelieferten Seite), nie im Repo. In Cloudflare unter SSL/TLS „Always Use HTTPS“ einschalten, damit das Passwort nur verschlüsselt übertragen wird.
 
 ### Bei jeder Änderung
 
@@ -119,9 +119,9 @@ Auf dem Mac im Repo-Ordner:
 ./deploy/deploy.sh 192.168.178.25
 ```
 
-Das Skript überträgt die Dateien per `rsync` nach `~/gut-aussehend/site` auf dem Pi und startet die Container neu. Ohne Token in `.env` läuft nur der Webserver, erreichbar im Heimnetz unter http://192.168.178.25:8090. Nach Änderungen an CSS oder JS vorher die `?v=...`-Nummer hochsetzen (siehe oben).
+Beim ersten Mal richtet das Skript den Pi ein und fragt dafür nach dem sudo-Passwort: nginx installieren, `/var/www/gut-aussehend` anlegen und erlauben, dass nginx ohne Passwort neu geladen wird. Danach überträgt es die Dateien per `rsync`, prüft die nginx-Konfiguration und lädt nginx neu. Ist die Konfiguration fehlerhaft, bleibt die alte aktiv. Port ändern: `WEB_PORT=8091 ./deploy/deploy.sh 192.168.178.25` (wird gemerkt). Nach Änderungen an CSS oder JS vorher die `?v=...`-Nummer hochsetzen (siehe oben).
 
-Das Rechnungsportal bleibt davon getrennt. Es kann später als eigener Public Hostname (z. B. `kasse.gut-aussehend.de`) in denselben Tunnel, aber erst, wenn der Login abgesichert ist.
+Das Rechnungsportal bleibt davon getrennt.
 
 ## Herkunft der Fotos
 
