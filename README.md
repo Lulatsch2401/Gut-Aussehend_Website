@@ -91,14 +91,15 @@ Die Seite läuft auf dem Pi 192.168.178.25 direkt mit nginx (ohne Docker) unter 
 
 ### Einmalig: Domain im Tunnel eintragen
 
-Cloudflare → Zero Trust → Networks → Tunnels → vorhandener Tunnel → Public Hostname → zwei Einträge:
+Der Tunnel `gutundaussehend-auslagen` wird lokal verwaltet (config.yml auf dem Pi), deshalb geht das nicht im Dashboard, sondern per Skript:
 
-| Subdomain | Domain | Service |
-|---|---|---|
-| (leer) | gut-aussehend.de | HTTP `192.168.178.25:8090` |
-| www | gut-aussehend.de | HTTP `192.168.178.25:8090` |
+```bash
+./deploy/tunnel-route.sh pi@192.168.178.25
+```
 
-Den Eintrag für `auslagen` nicht ändern. Unter SSL/TLS → Edge Certificates „Always Use HTTPS“ einschalten. In der FritzBox dem Pi eine feste IP geben.
+Es sucht die config.yml von cloudflared, fügt `gut-aussehend.de` und `www.gut-aussehend.de` → `http://localhost:8090` vor der Auffangregel ein, prüft die Datei, startet den Tunnel neu und stellt bei einem Fehler die alte Datei wieder her (Sicherung `config.yml.vor-website`). Die DNS-Einträge legt es an, wenn auf dem Pi das Cloudflare-Zertifikat liegt. Sonst nennt es die zwei CNAME-Einträge, die im Dashboard unter DNS anzulegen sind. Der Eintrag für `auslagen` bleibt unverändert.
+
+Unter SSL/TLS → Edge Certificates „Always Use HTTPS“ einschalten. In der FritzBox dem Pi eine feste IP geben.
 
 ### Passwortschutz
 
