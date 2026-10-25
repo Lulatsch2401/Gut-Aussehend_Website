@@ -2,6 +2,7 @@
 # web:    nginx liefert die statischen Dateien aus ./site aus (im Heimnetz auf Port 8080)
 # tunnel: Cloudflare Tunnel macht die Seite unter gut-aussehend.de erreichbar,
 #         ohne dass am Router ein Port geöffnet wird. Startet nur, wenn in .env ein TUNNEL_TOKEN steht.
+#         Wird ein schon vorhandener Tunnel auf dem Pi genutzt, bleibt .env leer und nur web läuft.
 services:
   web:
     image: nginx:1.27-alpine
@@ -19,7 +20,7 @@ services:
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     environment:
-      - TUNNEL_TOKEN=${TUNNEL_TOKEN:?TUNNEL_TOKEN fehlt in .env}
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN:-}
     depends_on:
       - web
     profiles: ["tunnel"]
