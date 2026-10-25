@@ -19,6 +19,14 @@ mkdir -p "$HOME/.ssh"
 SSH_OPTS="-o ControlMaster=auto -o ControlPath=$HOME/.ssh/cm-ga-%r@%h-%p -o ControlPersist=120"
 ssh_pi() { ssh $SSH_OPTS "$PI" "$@"; }
 
+echo "→ Docker auf dem Pi prüfen"
+if ! ssh_pi "command -v docker >/dev/null && docker compose version >/dev/null 2>&1"; then
+  echo "   Docker (mit compose) fehlt auf dem Pi oder dein Benutzer darf es nicht nutzen. Einmalig einrichten:"
+  echo "     ssh -t $PI 'curl -fsSL https://get.docker.com | sudo sh && sudo usermod -aG docker \$USER'"
+  echo "   Danach 2 Minuten warten (oder: ssh -O exit $SSH_OPTS $PI) und das Skript erneut starten."
+  exit 1
+fi
+
 echo "→ Ordner auf dem Pi anlegen: ~/$DIR"
 ssh_pi "mkdir -p '$DIR/site'"
 
