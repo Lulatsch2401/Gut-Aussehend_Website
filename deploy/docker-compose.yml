@@ -13,6 +13,9 @@ services:
     volumes:
       - ./site:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # Passwortschutz: legt deploy.sh an (ga-auth.conf an/aus, ga-htpasswd mit dem Passwort-Hash)
+      - ./ga-auth.conf:/etc/nginx/ga-auth.conf:ro
+      - ./ga-htpasswd:/etc/nginx/ga-htpasswd:ro
 
   tunnel:
     image: cloudflare/cloudflared:2024.8.3

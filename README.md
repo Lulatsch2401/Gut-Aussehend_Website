@@ -82,7 +82,7 @@ Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" un
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
 - [ ] Entwurfsmodus entfernen: in `index.html` den Block zwischen `<!-- ENTWURF -->` löschen, die Klasse `show-ph` streichen und die Zeile `<meta name="robots" content="noindex">` in allen drei Seiten entfernen
-- [ ] Cloudflare Access wieder entfernen, sobald die Seite öffentlich sein soll
+- [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.40 --ohne-passwort`
 - [ ] Rechnungsportal absichern, bevor Namen von Mitgliedern öffentlich auf der Seite stehen
 
 ## Hosting auf dem Raspberry Pi
@@ -100,7 +100,16 @@ Die Seite läuft auf dem Pi in Docker: `nginx` liefert die Dateien aus, `cloudfl
    ssh 192.168.178.40 "mkdir -p gut-aussehend && echo 'TUNNEL_TOKEN=HIER_DEN_TOKEN' > gut-aussehend/.env && chmod 600 gut-aussehend/.env"
    ```
 
-5. Solange die Seite noch Entwurf ist: Zero Trust → Access → Applications → Self-hosted → gut-aussehend.de, Policy „Allow“ mit den E-Mail-Adressen der Mitglieder. Dann sehen nur die freigegebenen Leute die Seite (Anmeldung per Code an die E-Mail).
+### Passwortschutz
+
+Solange die Seite Entwurf ist, fragt sie beim Aufruf nach Benutzername und Passwort (ein gemeinsames für alle). Das macht nginx auf dem Pi, Cloudflare speichert dabei nichts zwischen.
+
+- Beim ersten `deploy.sh` fragt das Skript nach Benutzername (Standard `verein`) und Passwort.
+- Passwort ändern: `./deploy/deploy.sh 192.168.178.40 --neues-passwort`
+- Für den echten Start abschalten: `./deploy/deploy.sh 192.168.178.40 --ohne-passwort`
+- Ohne Option bleibt es, wie es ist.
+
+Auf dem Pi liegt nur ein Hash des Passworts (`~/gut-aussehend/ga-htpasswd`), nie im Repo. In Cloudflare unter SSL/TLS „Always Use HTTPS“ einschalten, damit das Passwort nur verschlüsselt übertragen wird.
 
 ### Bei jeder Änderung
 
