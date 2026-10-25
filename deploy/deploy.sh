@@ -24,8 +24,22 @@ SSH_OPTS="-o ControlMaster=auto -o ControlPath=$HOME/.ssh/cm-ga-%r@%h-%p -o Cont
 ssh_pi()     { ssh $SSH_OPTS "$PI" "$@"; }
 ssh_pi_tty() { ssh -t $SSH_OPTS "$PI" "$@"; }
 
+echo "→ Port prüfen"
+ALT_PORT=$(ssh_pi "cat '$BASE/port' 2>/dev/null || true")
+PORT="${WEB_PORT:-${ALT_PORT:-8090}}"
+if [ "$PORT" != "$ALT_PORT" ]; then
+  BELEGT=$(ssh_pi "(ss -ltnH 2>/dev/null || netstat -ltn 2>/dev/null) | grep -qE '[:.]$PORT[[:space:]]' && echo belegt || echo frei")
+  if [ "$BELEGT" = "belegt" ]; then
+    echo "   Port $PORT ist auf dem Pi schon belegt. Belegte Ports:"
+    ssh_pi "(ss -ltnH 2>/dev/null || netstat -ltn 2>/dev/null) | awk '{print \"   \" \$4}' | sort -u"
+    echo "   Anderen Port wählen, z. B.:  WEB_PORT=8091 ./deploy/deploy.sh $PI"
+    exit 1
+  fi
+fi
+echo "   Port $PORT"
+
 echo "→ Pi prüfen"
-EINGERICHTET=$(ssh_pi "[ -L '$NGINX_ETC/sites-enabled/gut-aussehend' ] && [ -d '$BASE/site' ] && [ -w '$BASE' ] && sudo -n nginx -t >/dev/null 2>&1 && echo ja || echo nein")
+EINGERICHTET=$(ssh_pi "[ -L '$NGINX_ETC/sites-enabled/gut-aussehend' ] && [ -d '$BASE/site' ] && [ -w '$BASE' ] && sudo -n -l /usr/bin/systemctl reload-or-restart nginx >/dev/null 2>&1 && echo ja || echo nein")
 if [ "$EINGERICHTET" != "ja" ]; then
   echo "   Erste Einrichtung (fragt nach dem sudo-Passwort des Pi)"
   ssh_pi_tty "set -e
@@ -45,33 +59,25 @@ if [ "$EINGERICHTET" != "ja" ]; then
     [ -f '$BASE/htpasswd' ] || : > '$BASE/htpasswd'
     [ -f '$BASE/nginx.conf' ] || echo '# wird von deploy.sh geschrieben' > '$BASE/nginx.conf'
     sudo ln -sfn '$BASE/nginx.conf' '$NGINX_ETC/sites-enabled/gut-aussehend'
-    # nginx prüfen und neu laden ohne Passwort erlauben, sonst nichts
-    printf '%s ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /usr/bin/systemctl reload nginx\n' \"\$U\" | sudo tee /etc/sudoers.d/gut-aussehend >/dev/null
+    # nginx prüfen und (neu) starten ohne Passwort erlauben, sonst nichts
+    printf '%s ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /usr/bin/systemctl reload-or-restart nginx\n' \"\$U\" | sudo tee /etc/sudoers.d/gut-aussehend >/dev/null
     sudo chmod 440 /etc/sudoers.d/gut-aussehend
     sudo visudo -cf /etc/sudoers.d/gut-aussehend >/dev/null
-    sudo systemctl enable --now nginx >/dev/null 2>&1 || true
+    sudo systemctl enable nginx >/dev/null 2>&1 || true
+    # Firewall (ufw): Port im Heimnetz freigeben, damit die Seite dort im Browser erreichbar ist
+    if command -v ufw >/dev/null && sudo ufw status | grep -q 'Status: active'; then
+      NETZ=\$(ip -4 route | awk '/proto kernel/ && /scope link/ {print \$1; exit}')
+      sudo ufw allow from \"\${NETZ:-192.168.0.0/16}\" to any port $PORT proto tcp >/dev/null && echo \"   Firewall: Port $PORT für \${NETZ:-192.168.0.0/16} freigegeben\"
+    fi
     echo '   eingerichtet'"
 fi
 
-echo "→ Port prüfen"
-ALT_PORT=$(ssh_pi "cat '$BASE/port' 2>/dev/null || true")
-PORT="${WEB_PORT:-${ALT_PORT:-8090}}"
-if [ "$PORT" != "$ALT_PORT" ]; then
-  BELEGT=$(ssh_pi "(ss -ltnH 2>/dev/null || netstat -ltn 2>/dev/null) | grep -qE '[:.]$PORT[[:space:]]' && echo belegt || echo frei")
-  if [ "$BELEGT" = "belegt" ]; then
-    echo "   Port $PORT ist auf dem Pi schon belegt. Belegte Ports:"
-    ssh_pi "(ss -ltnH 2>/dev/null || netstat -ltn 2>/dev/null) | awk '{print \"   \" \$4}' | sort -u"
-    echo "   Anderen Port wählen, z. B.:  WEB_PORT=8091 ./deploy/deploy.sh $PI"
-    exit 1
-  fi
-fi
-echo "   Port $PORT"
-
 echo "→ Website-Dateien übertragen"
-rsync -az --delete --chmod=D755,F644 -e "ssh $SSH_OPTS" \
+rsync -az --delete -e "ssh $SSH_OPTS" \
   --exclude '.git' --exclude '.gitignore' --exclude '.vscode' --exclude '.DS_Store' \
   --exclude 'deploy' --exclude 'README.md' --exclude 'node_modules' \
   ./ "$PI:$BASE/site/"
+ssh_pi "find '$BASE/site' -type d -exec chmod 755 {} + && find '$BASE/site' -type f -exec chmod 644 {} +"
 
 echo "→ nginx-Konfiguration übertragen"
 sed -e "s|__PORT__|$PORT|g" -e "s|__BASE__|$BASE|g" deploy/nginx.conf \
@@ -104,7 +110,7 @@ fi
 echo "→ nginx neu laden"
 # Neue Konfiguration erst übernehmen, wenn nginx sie für gültig hält, sonst die alte behalten
 ssh_pi "cd '$BASE' && cp nginx.conf nginx.conf.alt 2>/dev/null || true; mv nginx.conf.neu nginx.conf && \
-  if sudo -n nginx -t >/dev/null 2>&1; then sudo -n systemctl reload nginx && echo '   ok'; \
+  if sudo -n nginx -t >/dev/null 2>&1; then sudo -n systemctl reload-or-restart nginx && echo '   ok'; \
   else echo '   Fehler in der nginx-Konfiguration:'; sudo -n nginx -t || true; \
     [ -f nginx.conf.alt ] && mv nginx.conf.alt nginx.conf; exit 1; fi"
 
