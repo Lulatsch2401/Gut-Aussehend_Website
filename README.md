@@ -119,7 +119,7 @@ Auf dem Mac im Repo-Ordner:
 ./deploy/deploy.sh 192.168.178.40
 ```
 
-Das Skript überträgt die Dateien per `rsync` nach `~/gut-aussehend/site` auf dem Pi und startet die Container neu. Ohne Token in `.env` läuft nur der Webserver, erreichbar im Heimnetz unter http://192.168.178.40:8080. Nach Änderungen an CSS oder JS vorher die `?v=...`-Nummer hochsetzen (siehe oben).
+Das Skript überträgt die Dateien per `rsync` nach `~/gut-aussehend/site` auf dem Pi und startet die Container neu. Ohne Token in `.env` läuft nur der Webserver, erreichbar im Heimnetz unter http://192.168.178.40:8090. Nach Änderungen an CSS oder JS vorher die `?v=...`-Nummer hochsetzen (siehe oben).
 
 Das Rechnungsportal bleibt davon getrennt. Es kann später als eigener Public Hostname (z. B. `kasse.gut-aussehend.de`) in denselben Tunnel, aber erst, wenn der Login abgesichert ist.
 

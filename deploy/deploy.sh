@@ -5,6 +5,7 @@
 #   ./deploy/deploy.sh benutzer@IP-des-Pi --ohne-passwort    Seite ohne Passwort, für den echten Start
 # Beim ersten Mal fragt das Skript nach Benutzername und Passwort für die Seite.
 # Optional: PI_DIR=anderer-ordner ./deploy/deploy.sh ...   (Standard: ~/gut-aussehend auf dem Pi)
+#           WEB_PORT=8091 ./deploy/deploy.sh ...         (Port im Heimnetz, Standard 8090, wird auf dem Pi gemerkt)
 set -euo pipefail
 
 PI="${1:?Aufruf: ./deploy/deploy.sh benutzer@IP-des-Pi [--neues-passwort|--ohne-passwort]}"
@@ -55,6 +56,21 @@ else
   echo "   unverändert: $ZUSTAND (ändern mit --neues-passwort oder --ohne-passwort)"
 fi
 
+echo "→ Port prüfen"
+if [ -n "${WEB_PORT:-}" ]; then
+  ssh_pi "cd '$DIR' && touch .env && grep -v '^WEB_PORT=' .env > .env.neu || true; echo 'WEB_PORT=$WEB_PORT' >> .env.neu && mv .env.neu .env && chmod 600 .env"
+fi
+PORT=$(ssh_pi "cd '$DIR' && grep -s '^WEB_PORT=' .env | cut -d= -f2 || true")
+PORT="${PORT:-8090}"
+BELEGT=$(ssh_pi "if docker ps --format '{{.Names}}' | grep -qx ga-web; then echo frei; elif (ss -ltnH 2>/dev/null || netstat -ltn 2>/dev/null) | grep -qE '[:.]$PORT[[:space:]]'; then echo belegt; else echo frei; fi")
+if [ "$BELEGT" = "belegt" ]; then
+  echo "   Port $PORT ist auf dem Pi schon belegt. Laufende Container und ihre Ports:"
+  ssh_pi "docker ps --format '   {{.Names}}  {{.Ports}}'"
+  echo "   Anderen Port wählen, z. B.:  WEB_PORT=8091 ./deploy/deploy.sh $PI"
+  exit 1
+fi
+echo "   Port $PORT"
+
 echo "→ Container starten"
 ssh_pi "cd '$DIR' && \
   if [ -f .env ] && grep -q '^TUNNEL_TOKEN=.' .env; then \
@@ -66,4 +82,5 @@ ssh_pi "cd '$DIR' && \
 
 HOST="${PI#*@}"
 echo
-echo "Fertig. Im Heimnetz: http://$HOST:8080"
+echo "Fertig. Im Heimnetz: http://$HOST:$PORT"
+echo "Im Cloudflare-Tunnel als Service eintragen: HTTP  $HOST:$PORT"
