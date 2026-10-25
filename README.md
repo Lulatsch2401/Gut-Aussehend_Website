@@ -71,6 +71,7 @@ Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" un
 - [ ] Mitgliederzahl bestätigen (aktuell 38, aus dem Rechnungsportal)
 - [ ] Texte gegenlesen, vor allem den Abschnitt Altstadttanz
 - [ ] Ansprechpartner im Kontakt eintragen
+- [ ] IONOS-Postfach für das Kontaktformular anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen, Rollen und Text prüfen
 - [ ] Termine der Session 2026/27 eintragen
 - [ ] Texte zu den Mottos 2024 (Up) und 2025 (Work in Progress) prüfen
@@ -111,6 +112,15 @@ Solange die Seite Entwurf ist, fragt sie beim Aufruf nach Benutzername und Passw
 - Ohne Option bleibt es, wie es ist.
 
 Auf dem Pi liegt nur ein Hash des Passworts (`/var/www/gut-aussehend/htpasswd`, außerhalb der ausgelieferten Seite), nie im Repo. In Cloudflare unter SSL/TLS „Always Use HTTPS“ einschalten, damit das Passwort nur verschlüsselt übertragen wird.
+
+### Kontaktformular
+
+Das Formular im Abschnitt Kontakt schickt an `/api/kontakt`. nginx reicht das an `deploy/kontakt.py` weiter, einen kleinen Python-Dienst auf dem Pi (`ga-kontakt`, nur Standardbibliothek, hört nur auf 127.0.0.1:8095). Er prüft die Eingaben, bremst Spam (unsichtbares Fallenfeld, Mindestzeit, höchstens 5 Nachrichten pro Stunde und Absender, 100 pro Tag) und verschickt die Nachricht per SMTP über ein IONOS-Postfach. Antworten gehen per „Antworten“ direkt an den Absender. Auf dem Pi wird nichts gespeichert.
+
+- Beim ersten `deploy.sh` fragt das Skript nach Postfach, Passwort und Empfänger und schickt eine Testmail. Mit Enter lässt sich das überspringen, das Formular verweist dann auf die E-Mail-Adresse.
+- Zugang ändern: `./deploy/deploy.sh 192.168.178.25 --kontakt-einrichten`
+- Die Zugangsdaten liegen nur auf dem Pi in `/var/www/gut-aussehend/kontakt.json` (nur für den Pi-Benutzer lesbar).
+- Fehler beim Versand: `ssh pi@192.168.178.25 journalctl -u ga-kontakt -n 30`
 
 ### Bei jeder Änderung
 

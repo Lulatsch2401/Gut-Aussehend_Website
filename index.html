@@ -16,7 +16,7 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/tilt-neon-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=20261024c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261025a">
 </head>
 <body>
 <script>
@@ -46,9 +46,9 @@
   <div class="wrap motto-row">
     <span class="motto-row__label" id="motto-row-label">Session</span>
     <div class="motto-bar" id="motto-bar" role="group" aria-labelledby="motto-row-label">
-      <button type="button" data-motto="matrix" aria-pressed="true"><span>2026</span> Matrix</button>
-      <button type="button" data-motto="wip" aria-pressed="false"><span>2025</span> Work in Progress</button>
-      <button type="button" data-motto="up" aria-pressed="false"><span>2024</span> Up</button>
+      <button type="button" data-motto="matrix" aria-pressed="true"><span class="mb__top"><span class="mb__year">2026</span> <span class="mb__name">„Matrix“</span></span><span class="mb__sub">Gefangen im Code</span></button>
+      <button type="button" data-motto="wip" aria-pressed="false"><span class="mb__top"><span class="mb__year">2025</span> <span class="mb__name">„Work in Progress“</span></span><span class="mb__sub">Unsere Baustelle</span></button>
+      <button type="button" data-motto="up" aria-pressed="false"><span class="mb__top"><span class="mb__year">2024</span> <span class="mb__name">„Up“</span></span><span class="mb__sub">Das fliegende Haus</span></button>
     </div>
   </div>
 </header>
@@ -583,17 +583,57 @@
           <h2 class="neon">Schreiben Sie uns</h2>
         </div>
         <div class="prose">
-          <p>Sie möchten uns unterstützen oder haben eine Frage zum Verein? Wir melden uns innerhalb weniger Tage.</p>
+          <p>Sie möchten uns unterstützen oder haben eine Frage zum Verein? Schreiben Sie uns über das Formular, wir melden uns innerhalb weniger Tage.</p>
         </div>
       </div>
       <div class="contact">
-        <p class="eyebrow">Sponsoring und Anfragen</p>
-        <div class="contact__mail">
-          <a id="mail-adresse" href="mailto:sponsoring@gut-aussehend.de" data-ph="Postfach anlegen">sponsoring@gut-aussehend.de</a>
-          <button class="copy" id="mail-kopieren" type="button">Adresse kopieren</button>
-        </div>
+        <form class="kform" id="kontakt-formular" action="/api/kontakt" method="post" novalidate>
+          <p class="eyebrow">Nachricht schreiben</p>
+          <div class="kform__row">
+            <label for="k-anliegen">Worum geht es?</label>
+            <select id="k-anliegen" name="anliegen">
+              <option value="sponsoring">Sponsoring</option>
+              <option value="frage">Frage zum Verein</option>
+              <option value="sonstiges">Sonstiges</option>
+            </select>
+          </div>
+          <div class="kform__row kform__row--2">
+            <div>
+              <label for="k-name">Name</label>
+              <input id="k-name" name="name" type="text" autocomplete="name" maxlength="100" required>
+            </div>
+            <div>
+              <label for="k-email">E-Mail</label>
+              <input id="k-email" name="email" type="email" autocomplete="email" maxlength="200" required>
+            </div>
+          </div>
+          <div class="kform__row">
+            <label for="k-nachricht">Nachricht</label>
+            <textarea id="k-nachricht" name="nachricht" rows="6" minlength="10" maxlength="5000" required></textarea>
+          </div>
+          <!-- Falle für Spam-Programme: für Menschen unsichtbar, muss leer bleiben -->
+          <div class="kform__trap" aria-hidden="true">
+            <label for="k-firma">Firma (bitte leer lassen)</label>
+            <input id="k-firma" name="firma" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="ts" value="">
+          <label class="kform__check">
+            <input type="checkbox" name="einwilligung" value="1" required>
+            <span>Meine Angaben werden nur genutzt, um meine Anfrage zu beantworten. Mehr dazu im <a href="datenschutz.html#kontaktformular">Datenschutz</a>.</span>
+          </label>
+          <button class="btn" type="submit">Nachricht senden</button>
+          <p class="kform__status" id="kontakt-status" role="status" aria-live="polite" hidden></p>
+        </form>
+
+        <div class="contact__direct">
+          <p class="eyebrow">Oder direkt</p>
+          <div class="contact__mail">
+            <a id="mail-adresse" href="mailto:sponsoring@gut-aussehend.de" data-ph="Postfach anlegen">sponsoring@gut-aussehend.de</a>
+            <button class="copy" id="mail-kopieren" type="button">Adresse kopieren</button>
+          </div>
         <p class="small"><span data-ph="Ansprechpartner eintragen">Ansprechpartner: Name folgt</span></p>
         <a class="contact__ig" href="https://www.instagram.com/gut_und_aussehend/" rel="noopener" target="_blank"><svg class="ig-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg><span>Oder per Direktnachricht an <strong>@gut_und_aussehend</strong></span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -632,7 +672,7 @@
 <!-- ENTWURF Ende -->
 
 </div>
-<script src="assets/data/inhalte.js?v=20261024c"></script>
-<script src="assets/js/site.js?v=20261024c"></script>
+<script src="assets/data/inhalte.js?v=20261025a"></script>
+<script src="assets/js/site.js?v=20261025a"></script>
 </body>
 </html>

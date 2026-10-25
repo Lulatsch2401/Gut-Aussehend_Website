@@ -151,6 +151,72 @@
     });
   }
 
+  /* ---- Kontaktformular: schickt an /api/kontakt (deploy/kontakt.py auf dem Pi) ---- */
+  var kform = doc.getElementById("kontakt-formular");
+  if (kform && window.fetch) {
+    var kstatus = doc.getElementById("kontakt-status");
+    var ksend = kform.querySelector('button[type="submit"]');
+    var mailHinweis = 'Bitte schreiben Sie uns direkt an <a href="mailto:sponsoring@gut-aussehend.de">sponsoring@gut-aussehend.de</a>.';
+    kform.elements.ts.value = String(Date.now());
+    var zeige = function (art, html) {
+      kstatus.hidden = false;
+      kstatus.className = "kform__status kform__status--" + art;
+      kstatus.innerHTML = html;
+    };
+    var markiere = function (felder) {
+      ["name", "email", "nachricht", "einwilligung"].forEach(function (n) {
+        var f = kform.elements[n];
+        if (f) f.setAttribute("aria-invalid", String(felder.indexOf(n) >= 0));
+      });
+      var erstes = felder.length ? kform.elements[felder[0]] : null;
+      if (erstes) erstes.focus();
+    };
+    // Ist der Versand eingerichtet? Sonst gleich auf die E-Mail-Adresse verweisen.
+    fetch("/api/kontakt", { credentials: "same-origin" }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d && d.bereit === false) zeige("info", "Das Formular ist gerade noch nicht freigeschaltet. " + mailHinweis);
+    }).catch(function () {});
+    kform.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var el = kform.elements;
+      var mail = el.email.value.trim();
+      var fehlt = [];
+      if (!el.name.value.trim()) fehlt.push("name");
+      if (!/^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$/.test(mail)) fehlt.push("email");
+      if (el.nachricht.value.trim().length < 10) fehlt.push("nachricht");
+      if (!el.einwilligung.checked) fehlt.push("einwilligung");
+      markiere(fehlt);
+      if (fehlt.length) {
+        zeige("fehler", "Bitte füllen Sie die markierten Felder aus. Die Nachricht braucht mindestens 10 Zeichen, und das Häkchen beim Datenschutz muss gesetzt sein.");
+        return;
+      }
+      ksend.disabled = true; ksend.textContent = "Wird gesendet …";
+      fetch("/api/kontakt", {
+        method: "POST", credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ anliegen: el.anliegen.value, name: el.name.value, email: mail, nachricht: el.nachricht.value,
+          firma: el.firma.value, ts: el.ts.value, einwilligung: el.einwilligung.checked ? "1" : "" })
+      }).then(function (r) {
+        return r.json().catch(function () { return { ok: false, fehler: "antwort" }; });
+      }).then(function (d) {
+        if (d.ok) {
+          kform.reset(); el.ts.value = String(Date.now()); markiere([]);
+          zeige("ok", "<strong>Danke!</strong> Ihre Nachricht ist angekommen. Wir melden uns bald.");
+        } else if (d.fehler === "eingabe") {
+          markiere(d.felder || []);
+          zeige("fehler", "Bitte prüfen Sie die markierten Felder.");
+        } else if (d.fehler === "zu_viele") {
+          zeige("fehler", "Von Ihrem Anschluss kamen gerade schon mehrere Nachrichten. Bitte versuchen Sie es später noch einmal. " + mailHinweis);
+        } else {
+          zeige("fehler", "Das hat leider nicht geklappt. " + mailHinweis);
+        }
+      }).catch(function () {
+        zeige("fehler", "Keine Verbindung zum Server. " + mailHinweis);
+      }).then(function () {
+        ksend.disabled = false; ksend.textContent = "Nachricht senden";
+      });
+    });
+  }
+
   /* ---- E-Mail-Adresse kopieren ---- */
   var copy = doc.getElementById("mail-kopieren");
   var mail = doc.getElementById("mail-adresse");

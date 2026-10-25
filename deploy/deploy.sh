@@ -4,6 +4,7 @@
 #   ./deploy/deploy.sh [benutzer@]IP-des-Pi                    normal (Passwortschutz bleibt, wie er ist)
 #   ./deploy/deploy.sh [benutzer@]IP-des-Pi --neues-passwort   Benutzer/Passwort für die Seite neu setzen
 #   ./deploy/deploy.sh [benutzer@]IP-des-Pi --ohne-passwort    Seite ohne Passwort, für den echten Start
+#   ./deploy/deploy.sh [benutzer@]IP-des-Pi --kontakt-einrichten  E-Mail-Zugang fürs Kontaktformular (neu) setzen
 # Optional: WEB_PORT=8091 ./deploy/deploy.sh ...   Port im Heimnetz (Standard 8090, wird auf dem Pi gemerkt)
 #
 # Beim ersten Mal richtet das Skript den Pi ein (fragt dafür nach dem sudo-Passwort):
@@ -11,11 +12,12 @@
 # danach ohne Passwort neu geladen werden darf. Danach braucht es kein sudo-Passwort mehr.
 set -euo pipefail
 
-PI="${1:?Aufruf: ./deploy/deploy.sh [benutzer@]IP-des-Pi [--neues-passwort|--ohne-passwort]}"
+PI="${1:?Aufruf: ./deploy/deploy.sh [benutzer@]IP-des-Pi [--neues-passwort|--ohne-passwort|--kontakt-einrichten]}"
 MODUS="${2:-}"
-case "$MODUS" in ""|--neues-passwort|--ohne-passwort) ;; *) echo "Unbekannte Option: $MODUS"; exit 1;; esac
+case "$MODUS" in ""|--neues-passwort|--ohne-passwort|--kontakt-einrichten) ;; *) echo "Unbekannte Option: $MODUS"; exit 1;; esac
 BASE="${GA_BASE:-/var/www/gut-aussehend}"          # auf dem Pi
 NGINX_ETC="${GA_NGINX_ETC:-/etc/nginx}"            # auf dem Pi
+KONTAKT_PORT=8095                                  # Kontaktformular, nur intern (127.0.0.1)
 cd "$(dirname "$0")/.."
 
 # Eine SSH-Verbindung für alle Schritte, damit das SSH-Passwort nur einmal abgefragt wird
@@ -39,7 +41,7 @@ fi
 echo "   Port $PORT"
 
 echo "→ Pi prüfen"
-EINGERICHTET=$(ssh_pi "[ -L '$NGINX_ETC/sites-enabled/gut-aussehend' ] && [ -d '$BASE/site' ] && [ -w '$BASE' ] && sudo -n -l /usr/bin/systemctl reload-or-restart nginx >/dev/null 2>&1 && echo ja || echo nein")
+EINGERICHTET=$(ssh_pi "[ -L '$NGINX_ETC/sites-enabled/gut-aussehend' ] && [ -d '$BASE/site' ] && [ -w '$BASE' ] && [ -f /etc/systemd/system/ga-kontakt.service ] && sudo -n -l /usr/bin/systemctl reload-or-restart nginx >/dev/null 2>&1 && sudo -n -l /usr/bin/systemctl restart ga-kontakt >/dev/null 2>&1 && echo ja || echo nein")
 if [ "$EINGERICHTET" != "ja" ]; then
   echo "   Erste Einrichtung (fragt nach dem sudo-Passwort des Pi)"
   ssh_pi_tty "set -e
@@ -60,10 +62,18 @@ if [ "$EINGERICHTET" != "ja" ]; then
     [ -f '$BASE/nginx.conf' ] || echo '# wird von deploy.sh geschrieben' > '$BASE/nginx.conf'
     sudo ln -sfn '$BASE/nginx.conf' '$NGINX_ETC/sites-enabled/gut-aussehend'
     # nginx prüfen und (neu) starten ohne Passwort erlauben, sonst nichts
-    printf '%s ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /usr/bin/systemctl reload-or-restart nginx\n' \"\$U\" | sudo tee /etc/sudoers.d/gut-aussehend >/dev/null
+    printf '%s ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /usr/bin/systemctl reload-or-restart nginx, /usr/bin/systemctl restart ga-kontakt\n' \"\$U\" | sudo tee /etc/sudoers.d/gut-aussehend >/dev/null
     sudo chmod 440 /etc/sudoers.d/gut-aussehend
     sudo visudo -cf /etc/sudoers.d/gut-aussehend >/dev/null
     sudo systemctl enable nginx >/dev/null 2>&1 || true
+    # Dienst fürs Kontaktformular (läuft als dein Benutzer, darf nur lesen, hört nur auf 127.0.0.1)
+    [ -f '$BASE/kontakt.py' ] || echo 'import time; time.sleep(3600)' > '$BASE/kontakt.py'
+    printf '%s\n' '[Unit]' 'Description=Gut und Aussehend Kontaktformular' 'After=network-online.target' 'Wants=network-online.target' '' \
+      '[Service]' \"User=\$U\" 'Environment=KONTAKT_PORT=$KONTAKT_PORT' 'ExecStart=/usr/bin/python3 $BASE/kontakt.py' 'Restart=on-failure' 'RestartSec=5' \
+      'NoNewPrivileges=true' 'ProtectSystem=strict' 'ProtectHome=true' 'PrivateTmp=true' 'ReadOnlyPaths=$BASE' '' \
+      '[Install]' 'WantedBy=multi-user.target' | sudo tee /etc/systemd/system/ga-kontakt.service >/dev/null
+    sudo systemctl daemon-reload
+    sudo systemctl enable ga-kontakt >/dev/null 2>&1
     # Firewall (ufw): Port im Heimnetz freigeben, damit die Seite dort im Browser erreichbar ist
     if command -v ufw >/dev/null && sudo ufw status | grep -q 'Status: active'; then
       NETZ=\$(ip -4 route | awk '/proto kernel/ && /scope link/ {print \$1; exit}')
@@ -78,9 +88,10 @@ rsync -az --delete -e "ssh $SSH_OPTS" \
   --exclude 'deploy' --exclude 'README.md' --exclude 'node_modules' \
   ./ "$PI:$BASE/site/"
 ssh_pi "find '$BASE/site' -type d -exec chmod 755 {} + && find '$BASE/site' -type f -exec chmod 644 {} +"
+rsync -a -e "ssh $SSH_OPTS" deploy/kontakt.py "$PI:$BASE/kontakt.py"
 
 echo "→ nginx-Konfiguration übertragen"
-sed -e "s|__PORT__|$PORT|g" -e "s|__BASE__|$BASE|g" deploy/nginx.conf \
+sed -e "s|__PORT__|$PORT|g" -e "s|__BASE__|$BASE|g" -e "s|__KONTAKT_PORT__|$KONTAKT_PORT|g" deploy/nginx.conf \
   | ssh_pi "cat > '$BASE/nginx.conf.neu' && echo '$PORT' > '$BASE/port'"
 
 echo "→ Passwortschutz"
@@ -107,12 +118,40 @@ else
   echo "   unverändert: $ZUSTAND (ändern mit --neues-passwort oder --ohne-passwort)"
 fi
 
+echo "→ Kontaktformular"
+# Zugangsdaten fürs Versenden (IONOS-Postfach). Liegen nur auf dem Pi in kontakt.json (nur für dich lesbar).
+K_ZUSTAND=$(ssh_pi "cd '$BASE' && if [ -s kontakt.json ]; then echo da; elif [ -f kontakt.spaeter ]; then echo spaeter; else echo neu; fi")
+K_TEST=nein
+if [ "$MODUS" = "--kontakt-einrichten" ] || [ "$K_ZUSTAND" = "neu" ]; then
+  echo "   Das Formular verschickt Nachrichten über ein E-Mail-Postfach bei IONOS."
+  read -rp "   Absender-Postfach (z. B. sponsoring@gut-aussehend.de, Enter = später): " K_USER
+  if [ -z "$K_USER" ]; then
+    ssh_pi "touch '$BASE/kontakt.spaeter'"
+    echo "   übersprungen: das Formular zeigt bis dahin die E-Mail-Adresse an. Später: $0 $PI --kontakt-einrichten"
+  else
+    read -rsp "   Passwort dieses Postfachs: " K_PW; echo
+    read -rp "   Nachrichten zustellen an [$K_USER]: " K_AN; K_AN="${K_AN:-$K_USER}"
+    read -rp "   SMTP-Server [smtp.ionos.de:587]: " K_SRV; K_SRV="${K_SRV:-smtp.ionos.de:587}"
+    printf '%s\n%s\n%s\n%s\n' "$K_USER" "$K_PW" "$K_AN" "$K_SRV" | ssh_pi "cd '$BASE' && python3 kontakt.py --konfig && rm -f kontakt.spaeter"
+    unset K_PW
+    K_TEST=ja
+  fi
+else
+  echo "   unverändert: $K_ZUSTAND (ändern mit --kontakt-einrichten)"
+fi
+
 echo "→ nginx neu laden"
 # Neue Konfiguration erst übernehmen, wenn nginx sie für gültig hält, sonst die alte behalten
 ssh_pi "cd '$BASE' && cp nginx.conf nginx.conf.alt 2>/dev/null || true; mv nginx.conf.neu nginx.conf && \
   if sudo -n nginx -t >/dev/null 2>&1; then sudo -n systemctl reload-or-restart nginx && echo '   ok'; \
   else echo '   Fehler in der nginx-Konfiguration:'; sudo -n nginx -t || true; \
     [ -f nginx.conf.alt ] && mv nginx.conf.alt nginx.conf; exit 1; fi"
+
+echo "→ Kontaktformular starten"
+ssh_pi "sudo -n systemctl restart ga-kontakt && sleep 1 && systemctl is-active --quiet ga-kontakt && echo '   läuft' || { echo '   startet nicht:'; journalctl -u ga-kontakt -n 15 --no-pager 2>/dev/null || true; }"
+if [ "$K_TEST" = ja ]; then
+  ssh_pi "cd '$BASE' && python3 kontakt.py --test" || echo "   Bitte Postfach und Passwort prüfen: $0 $PI --kontakt-einrichten"
+fi
 
 HOST="${PI#*@}"
 echo
