@@ -179,7 +179,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 }
 
 /* ---------- Kennzahlen ---------- */
-.facts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); }
 .facts li { display: grid; gap: 0.2rem; align-content: start; padding: 1.4rem 1.2rem; border-left: 1px solid var(--line); min-width: 0; }
 .facts li:first-child { border-left: 0; padding-left: 0; }
 .facts strong { font-family: var(--f-display); font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 2.6rem); line-height: 1.05; color: #fff; text-shadow: var(--glow-pink); font-variant-numeric: tabular-nums; }
@@ -189,7 +189,6 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
   .facts li { padding: 1.1rem 0.9rem; }
   .facts li:nth-child(odd) { border-left: 0; padding-left: 0; }
   .facts li:nth-child(n + 3) { border-top: 1px solid var(--line); }
-  .facts li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 
 /* ---------- Abschnitte ---------- */
@@ -476,3 +475,6 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 .kform__status--fehler { background: rgba(255, 107, 125, 0.12); border: 1px solid rgba(255, 107, 125, 0.55); }
 .kform__status--info { background: var(--deep); border: 1px solid var(--line); }
 .contact__direct { display: grid; gap: 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+
+.sponsor-outro { margin-top: clamp(1.4rem, 3vw, 2rem); font-size: 1.1rem; max-width: 40rem; }
+.section__head .lead + .lead { margin-top: 0.8rem; }

@@ -58,7 +58,7 @@ Neues Motto ergänzen:
 
 ## Instagram
 
-Der Instagram-Kanal @gut_und_aussehend ist verlinkt im Kopf, im Aufmacher, in den Kennzahlen, in einem eigenen Abschnitt, bei den Sponsorenpaketen, im Kontakt und im Fuß. Die Followerzahl steht nur einmal in `assets/data/inhalte.js` (`instagram.follower`) und wird überall eingesetzt. Die Seite bettet nichts von Instagram ein, es sind reine Links (keine Cookies, kein Datenschutz-Hinweis nötig). Die Kacheln im Abschnitt sind eigene Fotos von der Seite und führen zum Profil.
+Der Instagram-Kanal @gut_und_aussehend ist verlinkt im Kopf, im Aufmacher, in den Kennzahlen, in einem eigenen Abschnitt, bei den Sponsorenpaketen, im Kontakt und im Fuß. Die Followerzahl erscheint nur einmal als „Über … Follower“ im Instagram-Abschnitt und steht in `assets/data/inhalte.js` (`instagram.follower`). Die Seite bettet nichts von Instagram ein, es sind reine Links (keine Cookies, kein Datenschutz-Hinweis nötig). Die Kacheln im Abschnitt sind eigene Fotos von der Seite und führen zum Profil.
 
 ## Termin eintragen
 
@@ -69,14 +69,11 @@ In `assets/data/inhalte.js` unter `termine`. `offen: true` zeigt den Hinweis "Te
 Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" unten links).
 
 - [ ] Mitgliederzahl bestätigen (aktuell 38, aus dem Rechnungsportal)
-- [ ] Texte gegenlesen, vor allem den Abschnitt Altstadttanz
 - [ ] Ansprechpartner im Kontakt eintragen
 - [ ] IONOS-Postfach für das Kontaktformular anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen, Rollen und Text prüfen
 - [ ] Termine der Session 2026/27 eintragen
 - [ ] Texte zu den Mottos 2024 (Up) und 2025 (Work in Progress) prüfen
-- [ ] Zuschauerzahlen ergänzen
-- [ ] Instagram-Followerzahl ab und zu in `assets/data/inhalte.js` nachtragen (aktuell 800)
 - [ ] Postfach `sponsoring@gut-aussehend.de` anlegen oder Adresse ändern
 - [ ] Rechtsform klären: Impressum, Spendenquittungen
 - [ ] Impressum und Datenschutzerklärung ausformulieren

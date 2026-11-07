@@ -9,7 +9,7 @@
        url: "https://www.example.de", paket: "wagen" },
 
    INSTAGRAM
-   follower: aktuelle Zahl, erscheint überall auf der Seite (Kennzahlen, Aufmacher, Sponsoren).
+   follower: gerundete Zahl für den Satz „Über … Follower“ im Instagram-Abschnitt. Nur selten nachtragen.
    Ab und zu nachtragen, eine gerundete Zahl reicht.
 
    TERMINE
