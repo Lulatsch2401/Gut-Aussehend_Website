@@ -16,14 +16,14 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/tilt-neon-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=20261107a">
+<link rel="stylesheet" href="assets/css/site.css?v=20261107b">
 </head>
 <body>
 <script>
   /* Gewählte Session vor dem ersten Zeichnen setzen, damit die Seite nicht kurz im falschen Look erscheint. */
   try { var gaM = localStorage.getItem("ga-motto"); if (/^(matrix|wip|up)$/.test(gaM || "")) document.documentElement.setAttribute("data-motto", gaM); } catch (e) {}
 </script>
-<div class="page show-ph">
+<div class="page">
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
 <header class="site-head">
@@ -126,28 +126,28 @@
           <img src="assets/img/gruender-oli-s.webp" srcset="assets/img/gruender-oli-s.webp 480w, assets/img/gruender-oli-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Oli. Lässig mit Sonnenbrille beim Altstadttanz, die Hand zum Gruß erhoben.">
         </a>
         <strong>Oli</strong>
-        <span data-ph="Rolle ergänzen">Gründer</span>
+        <span>Gründer</span>
       </li>
       <li class="founder">
         <a class="shot" href="assets/img/gruender-richard-l.webp" data-caption="Richard, Gründer von Gut und Aussehend.">
           <img src="assets/img/gruender-richard-s.webp" srcset="assets/img/gruender-richard-s.webp 480w, assets/img/gruender-richard-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Richard. Im Bauarbeiter-Kostüm mit gelbem Helm, zeigt lachend in die Kamera.">
         </a>
         <strong>Richard</strong>
-        <span data-ph="Rolle ergänzen">Gründer</span>
+        <span>Gründer</span>
       </li>
       <li class="founder">
         <a class="shot" href="assets/img/gruender-robert-l.webp" data-caption="Robert, Gründer von Gut und Aussehend.">
           <img src="assets/img/gruender-robert-s.webp" srcset="assets/img/gruender-robert-s.webp 480w, assets/img/gruender-robert-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Robert. Im Hawaiihemd mit einem Getränk beim Altstadttanz, zwinkert in die Kamera.">
         </a>
         <strong>Robert</strong>
-        <span data-ph="Rolle ergänzen">Gründer</span>
+        <span>Gründer</span>
       </li>
       <li class="founder">
         <a class="shot" href="assets/img/gruender-toni-l.webp" data-caption="Toni, Gründer von Gut und Aussehend.">
           <img src="assets/img/gruender-toni-s.webp" srcset="assets/img/gruender-toni-s.webp 480w, assets/img/gruender-toni-l.webp 960w" sizes="(min-width: 900px) 22vw, 45vw" width="960" height="1200" loading="lazy" alt="Toni. Mit gelbem Helm und roter Brille, hält stolz den Pokal in die Kamera.">
         </a>
         <strong>Toni</strong>
-        <span data-ph="Rolle ergänzen">Gründer</span>
+        <span>Gründer</span>
       </li>
     </ul>
   </div>
@@ -516,8 +516,8 @@
       <h2 class="neon">Termine</h2>
       <p class="lead">Wann und wo man uns erlebt? Hier steht’s! Die genauen Daten ergänzen wir, sobald sie feststehen.</p>
     </div>
-    <ul class="dates ph-block" id="termine-liste" data-ph="Termine und Daten prüfen">
-      <li><span class="dates__when">Februar 2027</span><div class="dates__what"><strong>Umzüge in Pegau und Groitzsch</strong></div><span class="chip">Termin folgt</span></li>
+    <ul class="dates" id="termine-liste">
+      <li><span class="dates__when">6. und 7. Februar 2027</span><div class="dates__what"><strong>Umzüge in Pegau und Groitzsch</strong></div></li>
     </ul>
   </div>
 </section>
@@ -574,7 +574,6 @@
     <div class="hero__cta sponsor-cta">
       <a class="btn" href="#kontakt">Jetzt anfragen</a>
     </div>
-    <p class="small note"><span data-ph="hängt an der Rechtsform">Ob wir Spendenquittungen ausstellen können, klären wir gerade.</span></p>
   </div>
 </section>
 
@@ -668,15 +667,15 @@
   </div>
 </dialog>
 
-<!-- ENTWURF: Diesen Block vor dem Livegang entfernen und oben die Klasse "show-ph" streichen. -->
+<!-- ENTWURF: Diesen Block vor dem Livegang entfernen. -->
 <div class="draft-bar" role="region" aria-label="Entwurfshinweis">
   <span>Entwurf</span>
-  <button type="button" id="ph-toggle" aria-pressed="true">Platzhalter ausblenden</button>
+  <button type="button" id="ph-toggle" aria-pressed="false">Platzhalter anzeigen</button>
 </div>
 <!-- ENTWURF Ende -->
 
 </div>
-<script src="assets/data/inhalte.js?v=20261107a"></script>
-<script src="assets/js/site.js?v=20261107a"></script>
+<script src="assets/data/inhalte.js?v=20261107b"></script>
+<script src="assets/js/site.js?v=20261107b"></script>
 </body>
 </html>

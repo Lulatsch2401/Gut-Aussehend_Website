@@ -66,19 +66,19 @@ In `assets/data/inhalte.js` unter `termine`. `offen: true` zeigt den Hinweis "Te
 
 ## Vor dem Livegang
 
-Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" unten links).
+Alle offenen Stellen sind auf der Seite pink markiert, sichtbar über den Schalter „Platzhalter anzeigen“ unten links. Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 
 - [ ] Mitgliederzahl bestätigen (aktuell 38, aus dem Rechnungsportal)
 - [ ] Ansprechpartner im Kontakt eintragen
 - [ ] IONOS-Postfach für das Kontaktformular anlegen und mit `--kontakt-einrichten` hinterlegen
-- [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen, Rollen und Text prüfen
-- [ ] Termine der Session 2026/27 eintragen
+- [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen
+- [ ] Termine 2027 prüfen: Uhrzeit Pegau, Datum Altstadttanz
 - [ ] Postfach `sponsoring@gut-aussehend.de` anlegen oder Adresse ändern
-- [ ] Rechtsform klären: Impressum, Spendenquittungen
+- [ ] Rechtsform klären (fürs Impressum)
 - [ ] Impressum und Datenschutzerklärung ausformulieren
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
-- [ ] Entwurfsmodus entfernen: in `index.html` den Block zwischen `<!-- ENTWURF -->` löschen, die Klasse `show-ph` streichen und die Zeile `<meta name="robots" content="noindex">` in allen drei Seiten entfernen
+- [ ] Entwurfsmodus entfernen: in `index.html` den Block zwischen `<!-- ENTWURF -->` löschen, und die Zeile `<meta name="robots" content="noindex">` in allen drei Seiten entfernen
 - [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
 - [ ] Rechnungsportal absichern, bevor Namen von Mitgliedern öffentlich auf der Seite stehen
 
