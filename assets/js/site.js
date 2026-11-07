@@ -276,14 +276,4 @@
     }
   });
 
-  /* ---- Entwurfsmodus: Platzhalter ein- und ausblenden ---- */
-  var page = doc.querySelector(".page");
-  var phToggle = doc.getElementById("ph-toggle");
-  if (page && phToggle) {
-    phToggle.addEventListener("click", function () {
-      var on = page.classList.toggle("show-ph");
-      phToggle.setAttribute("aria-pressed", String(on));
-      phToggle.textContent = on ? "Platzhalter ausblenden" : "Platzhalter anzeigen";
-    });
-  }
 })();

@@ -66,7 +66,7 @@ In `assets/data/inhalte.js` unter `termine`. `offen: true` zeigt den Hinweis "Te
 
 ## Vor dem Livegang
 
-Alle offenen Stellen sind auf der Seite pink markiert, sichtbar über den Schalter „Platzhalter anzeigen“ unten links. Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
+Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 
 - [ ] Mitgliederzahl bestätigen (aktuell 38, aus dem Rechnungsportal)
 - [ ] Ansprechpartner im Kontakt eintragen
@@ -75,12 +75,19 @@ Alle offenen Stellen sind auf der Seite pink markiert, sichtbar über den Schalt
 - [ ] Termine 2027 prüfen: Uhrzeit Pegau, Datum Altstadttanz
 - [ ] Postfach `sponsoring@gut-aussehend.de` anlegen oder Adresse ändern
 - [ ] Rechtsform klären (fürs Impressum)
-- [ ] Impressum und Datenschutzerklärung ausformulieren
+- [ ] Impressum ausfüllen, Datenschutzerklärung gegenlesen lassen
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
-- [ ] Entwurfsmodus entfernen: in `index.html` den Block zwischen `<!-- ENTWURF -->` löschen, und die Zeile `<meta name="robots" content="noindex">` in allen drei Seiten entfernen
 - [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
 - [ ] Rechnungsportal absichern, bevor Namen von Mitgliedern öffentlich auf der Seite stehen
+
+## Google und Zertifikate
+
+- `robots.txt` und `sitemap.xml` liegen im Hauptordner. Beim Hinzufügen neuer Seiten die Sitemap ergänzen.
+- `index.html` hat Beschreibung, Canonical-Link, Open-Graph-Angaben und strukturierte Daten (schema.org Organization).
+- `www.gut-aussehend.de` leitet per 301 auf `gut-aussehend.de` um (nginx).
+- Das HTTPS-Zertifikat stellt Cloudflare bereit und verlängert es automatisch. Auf dem Pi ist kein Zertifikat nötig, der Tunnel ist selbst verschlüsselt.
+- Google sieht die Seite erst, wenn der Passwortschutz aus ist.
 
 ## Hosting auf dem Raspberry Pi
 

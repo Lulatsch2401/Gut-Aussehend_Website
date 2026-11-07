@@ -1,7 +1,6 @@
 # Offene Punkte – Website Gut und Aussehend
 
-Stand: 7. November 2026. Die Seite läuft als passwortgeschützte Vorzeigeversion auf dem Pi.
-Pink markierte Stellen auf der Seite lassen sich unten links über „Platzhalter anzeigen“ einblenden.
+Stand: 7. November 2026. Entwurfsleiste, Platzhalter und `noindex` sind entfernt. Die Seite ist bereit zum Online-Gehen, sobald das Impressum gefüllt ist.
 
 ## Bewusst zurückgestellt
 
@@ -9,7 +8,7 @@ Pink markierte Stellen auf der Seite lassen sich unten links über „Platzhalte
 |---|---|---|
 | Pokal 2025 | Auf den Fotos 2025 ist ein Pokal zu sehen, Platzierung unbekannt | Platz, Kategorie und Umzug (Pegau oder Groitzsch) klären, dann wie bei 2026 als Auszeichnung im Wagen-Abschnitt 2025 ergänzen |
 | Rollen der Gründer | Unter Oli, Richard, Robert und Toni steht „Gründer“ | Bleibt so, bis jemand Rollen nennen möchte |
-| Ansprechpartner im Kontakt | „Ansprechpartner: Name folgt“ | Name und ggf. Rolle in `index.html` im Abschnitt Kontakt eintragen |
+| Ansprechpartner im Kontakt | Zeile vorerst entfernt | Bei Bedarf Name und Rolle im Abschnitt Kontakt ergänzen |
 | Spendenquittungen | Hinweis von der Seite entfernt | Erst wieder aufnehmen, wenn die Rechtsform (e. V., gemeinnützig?) geklärt ist |
 
 ## Termine 2027 (recherchiert am 7. November 2026)
@@ -30,16 +29,19 @@ Quellen:
 - https://www.stadt-pegau.de/veranstaltungen/grosser-karnevalsumzug/
 - https://www.festivalsindeutschland.de/festival/pegauer-altstadtfest
 
-## Vor dem öffentlichen Start
+## Online gehen
 
-- [ ] Impressum ausformulieren (verantwortliche Person, Anschrift, ggf. Vereinsregister)
-- [ ] Datenschutzerklärung ausformulieren und den Abschnitt zum Kontaktformular prüfen lassen
+- [ ] **Impressum füllen** (Pflicht, § 5 DDG): offizieller Vereinsname, ladungsfähige Anschrift, vertretungsberechtigte Person(en), E-Mail, bei e. V. Registergericht und -nummer
+- [x] Datenschutzerklärung ausformuliert (Server-Logs, Cloudflare, Kontaktformular, IONOS, localStorage, Instagram-Link, Fotos, Rechte, Aufsicht Sachsen). Vor dem Start einmal gegenlesen lassen, keine Rechtsberatung
+- [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
+- [ ] Google Search Console: Domain-Property `gut-aussehend.de` anlegen, Bestätigung per DNS-TXT in Cloudflare, Sitemap `https://gut-aussehend.de/sitemap.xml` einreichen
+- [ ] Cloudflare DNS: `_dmarc`, `autodiscover`, `_domainconnect` auf „DNS only“ (graue Wolke), sonst leidet die E-Mail-Zustellung
+- [ ] Cloudflare SSL/TLS → Edge Certificates: „Minimum TLS Version“ 1.2, „Automatic HTTPS Rewrites“ an. HSTS erst nach ein paar Wochen stabilem Betrieb einschalten
+- [ ] IONOS-Postfach `sponsoring@gut-aussehend.de` anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Rechtsform klären
 - [ ] Einverständnis der Gründer und aller gut erkennbaren Personen auf den Fotos
 - [ ] Mitgliederzahl bestätigen (aktuell 38)
-- [ ] IONOS-Postfach `sponsoring@gut-aussehend.de` anlegen und mit `./deploy/deploy.sh 192.168.178.25 --kontakt-einrichten` hinterlegen
 - [ ] Logo als Vektordatei besorgen
-- [ ] Entwurfsleiste und `noindex` entfernen, Passwortschutz abschalten (`--ohne-passwort`)
 - [ ] Rechnungsportal (auslagen.gut-aussehend.de) absichern, Portal-Repo auf privat stellen
 
 ## Später

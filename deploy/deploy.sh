@@ -85,7 +85,7 @@ fi
 echo "→ Website-Dateien übertragen"
 rsync -az --delete -e "ssh $SSH_OPTS" \
   --exclude '.git' --exclude '.gitignore' --exclude '.vscode' --exclude '.DS_Store' \
-  --exclude 'deploy' --exclude 'README.md' --exclude 'node_modules' \
+  --exclude 'deploy' --exclude '*.md' --exclude 'node_modules' \
   ./ "$PI:$BASE/site/"
 ssh_pi "find '$BASE/site' -type d -exec chmod 755 {} + && find '$BASE/site' -type f -exec chmod 644 {} +"
 rsync -a -e "ssh $SSH_OPTS" deploy/kontakt.py "$PI:$BASE/kontakt.py"
