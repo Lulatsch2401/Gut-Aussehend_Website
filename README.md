@@ -73,7 +73,6 @@ Alle offenen Stellen sind auf der Seite pink markiert (Schalter "Platzhalter" un
 - [ ] IONOS-Postfach für das Kontaktformular anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen, Rollen und Text prüfen
 - [ ] Termine der Session 2026/27 eintragen
-- [ ] Texte zu den Mottos 2024 (Up) und 2025 (Work in Progress) prüfen
 - [ ] Postfach `sponsoring@gut-aussehend.de` anlegen oder Adresse ändern
 - [ ] Rechtsform klären: Impressum, Spendenquittungen
 - [ ] Impressum und Datenschutzerklärung ausformulieren
