@@ -22,7 +22,7 @@ Ein Doppelklick auf `index.html` funktioniert auch.
 | `deploy/impressum-vorlage.html` | Impressum-Vorlage für später, wird nicht hochgeladen |
 | `assets/data/inhalte.js` | Termine und Instagram-Followerzahl. Nur diese Datei ändern, die Seite baut sich daraus. |
 | `assets/css/site.css` | Gestaltung. Farben und Schriften stehen oben als Variablen. |
-| `assets/js/site.js` | Menü, Termine, Kontaktformular, Großansicht der Fotos |
+| `assets/js/site.js` | Menü, Termine, Mailadresse kopieren, Großansicht der Fotos |
 | `assets/img/` | Fotos als WebP in zwei Größen (`-s` 800 px, `-l` groß), ohne EXIF- und GPS-Daten |
 | `assets/fonts/` | Schriften lokal eingebunden (je Motto eine eigene Überschriftenschrift), Lizenzen in `LIZENZEN.txt` |
 
@@ -59,7 +59,6 @@ Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 - [ ] Ansprechpartner im Kontakt eintragen
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen
 - [ ] Termine 2027 prüfen: Uhrzeit Pegau, Datum Altstadttanz
-- [ ] Für `gut.aussehend.fasching@gmail.com` ein App-Passwort anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Datenschutzerklärung gegenlesen lassen
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
@@ -101,11 +100,9 @@ Solange die Seite Entwurf ist, fragt sie beim Aufruf nach Benutzername und Passw
 
 Auf dem Pi liegt nur ein Hash des Passworts (`/var/www/gut-aussehend/htpasswd`, außerhalb der ausgelieferten Seite), nie im Repo. In Cloudflare unter SSL/TLS „Always Use HTTPS“ einschalten, damit das Passwort nur verschlüsselt übertragen wird.
 
-### Kontaktformular
+### Kontaktformular (derzeit nicht eingebunden)
 
-Gmail braucht ein App-Passwort: Google-Konto → Sicherheit → Bestätigung in zwei Schritten einschalten → „App-Passwörter“ → neues Passwort „Website“ anlegen. Dieses 16-stellige Passwort (nicht das normale Google-Passwort) beim Einrichten eingeben.
-
-Das Formular im Abschnitt Kontakt schickt an `/api/kontakt`. nginx reicht das an `deploy/kontakt.py` weiter, einen kleinen Python-Dienst auf dem Pi (`ga-kontakt`, nur Standardbibliothek, hört nur auf 127.0.0.1:8095). Er prüft die Eingaben, bremst Spam (unsichtbares Fallenfeld, Mindestzeit, höchstens 5 Nachrichten pro Stunde und Absender, 100 pro Tag) und verschickt die Nachricht per SMTP über das Gmail-Postfach. Antworten gehen per „Antworten“ direkt an den Absender. Auf dem Pi wird nichts gespeichert.
+Auf der Seite steht im Kontakt nur die E-Mail-Adresse. Das frühere Formular ist in der Git-Historie (Commit 72d4d92), der Dienst `deploy/kontakt.py` liegt weiter im Repo. Zum Wiedereinbauen das Formular aus der Historie zurückholen, im Datenschutz den Abschnitt zum Formular ergänzen und ein Gmail-App-Passwort hinterlegen (Google-Konto → Sicherheit → Bestätigung in zwei Schritten → „App-Passwörter“).
 
 - Beim ersten `deploy.sh` fragt das Skript nach Postfach, Passwort und Empfänger und schickt eine Testmail. Mit Enter lässt sich das überspringen, das Formular verweist dann auf die E-Mail-Adresse.
 - Zugang ändern: `./deploy/deploy.sh 192.168.178.25 --kontakt-einrichten`

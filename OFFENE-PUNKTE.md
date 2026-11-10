@@ -6,6 +6,7 @@ Stand: 10. November 2026. Die Seite ist eine reine Vorstellungsseite der Gruppe:
 
 - Alles zu Sponsoren ist entfernt (Abschnitte „Unsere Sponsoren“ und „Sponsor werden“, Menüpunkt, Knopf im Aufmacher, Anliegen „Sponsoring“ im Formular, Sponsorenwand im Skript).
 - `impressum.html` ist von der Seite genommen und liegt als Vorlage unter `deploy/impressum-vorlage.html` (wird nicht hochgeladen).
+- Kontaktformular entfernt, im Kontakt steht nur noch die E-Mail-Adresse (zum Kopieren) und Instagram. Damit entfällt auch das Gmail-App-Passwort.
 - Datenschutz nennt als Verantwortlichen „Gut und Aussehend“ mit der Gmail-Adresse.
 - Bewusst in Kauf genommen: § 18 Abs. 1 MStV verlangt auch für nicht-geschäftliche, öffentliche Seiten Name und Anschrift. Das Risiko (Abmahnung, Bußgeld) bleibt klein, aber nicht null.
 - Sobald wieder Sponsoren auf die Seite sollen oder eine Adresse geklärt ist (c/o-Adresse oder Impressum-Service): Vorlage zurück nach `impressum.html`, ausfüllen, im Fuß von `index.html` und `datenschutz.html` verlinken, in `sitemap.xml` eintragen. Die alten Sponsoren-Abschnitte stehen in der Git-Historie (Commit d057c76).
@@ -40,12 +41,11 @@ Quellen:
 ## Online gehen
 
 - [x] Sponsoring und Impressum entfernt, Seite ist reine Vorstellung der Gruppe (siehe oben)
-- [x] Datenschutzerklärung ausformuliert, Verantwortlicher ohne Impressum (Server-Logs, Cloudflare, Kontaktformular, Gmail, localStorage, Instagram-Link, Fotos, Rechte, Aufsicht Sachsen). Vor dem Start einmal gegenlesen lassen, keine Rechtsberatung
+- [x] Datenschutzerklärung ausformuliert, Verantwortlicher ohne Impressum (Server-Logs, Cloudflare, E-Mail über Gmail, localStorage, Instagram-Link, Fotos, Rechte, Aufsicht Sachsen). Vor dem Start einmal gegenlesen lassen, keine Rechtsberatung
 - [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
 - [ ] Google Search Console: Domain-Property `gut-aussehend.de` anlegen, Bestätigung per DNS-TXT in Cloudflare, Sitemap `https://gut-aussehend.de/sitemap.xml` einreichen
 - [ ] Cloudflare DNS: `_dmarc`, `autodiscover`, `_domainconnect` auf „DNS only“ (graue Wolke), sonst leidet die E-Mail-Zustellung
 - [ ] Cloudflare SSL/TLS → Edge Certificates: „Minimum TLS Version“ 1.2, „Automatic HTTPS Rewrites“ an. HSTS erst nach ein paar Wochen stabilem Betrieb einschalten
-- [ ] Für `gut.aussehend.fasching@gmail.com` ein Gmail-App-Passwort anlegen und mit `./deploy/deploy.sh 192.168.178.25 --kontakt-einrichten` hinterlegen
 - [x] Rechtsform geklärt: kein eingetragener Verein, keine Spendenquittungen
 - [ ] Einverständnis der Gründer und aller gut erkennbaren Personen auf den Fotos
 - [ ] Mitgliederzahl bestätigen (aktuell 38)
