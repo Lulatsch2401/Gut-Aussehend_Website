@@ -74,7 +74,6 @@ Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen
 - [ ] Termine 2027 prüfen: Uhrzeit Pegau, Datum Altstadttanz
 - [ ] Postfach `sponsoring@gut-aussehend.de` anlegen oder Adresse ändern
-- [ ] Rechtsform klären (fürs Impressum)
 - [ ] Impressum ausfüllen, Datenschutzerklärung gegenlesen lassen
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
