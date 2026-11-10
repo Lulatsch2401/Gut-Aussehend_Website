@@ -119,19 +119,19 @@ else
 fi
 
 echo "→ Kontaktformular"
-# Zugangsdaten fürs Versenden (IONOS-Postfach). Liegen nur auf dem Pi in kontakt.json (nur für dich lesbar).
+# Zugangsdaten fürs Versenden (Gmail-Postfach mit App-Passwort). Liegen nur auf dem Pi in kontakt.json (nur für dich lesbar).
 K_ZUSTAND=$(ssh_pi "cd '$BASE' && if [ -s kontakt.json ]; then echo da; elif [ -f kontakt.spaeter ]; then echo spaeter; else echo neu; fi")
 K_TEST=nein
 if [ "$MODUS" = "--kontakt-einrichten" ] || [ "$K_ZUSTAND" = "neu" ]; then
-  echo "   Das Formular verschickt Nachrichten über ein E-Mail-Postfach bei IONOS."
-  read -rp "   Absender-Postfach (z. B. sponsoring@gut-aussehend.de, Enter = später): " K_USER
+  echo "   Das Formular verschickt Nachrichten über euer Gmail-Postfach (App-Passwort nötig, siehe README)."
+  read -rp "   Absender-Postfach (z. B. gut.aussehend.fasching@gmail.com, Enter = später): " K_USER
   if [ -z "$K_USER" ]; then
     ssh_pi "touch '$BASE/kontakt.spaeter'"
     echo "   übersprungen: das Formular zeigt bis dahin die E-Mail-Adresse an. Später: $0 $PI --kontakt-einrichten"
   else
-    read -rsp "   Passwort dieses Postfachs: " K_PW; echo
+    read -rsp "   App-Passwort dieses Postfachs (16 Zeichen, ohne Leerzeichen): " K_PW; echo
     read -rp "   Nachrichten zustellen an [$K_USER]: " K_AN; K_AN="${K_AN:-$K_USER}"
-    read -rp "   SMTP-Server [smtp.ionos.de:587]: " K_SRV; K_SRV="${K_SRV:-smtp.ionos.de:587}"
+    read -rp "   SMTP-Server [smtp.gmail.com:587]: " K_SRV; K_SRV="${K_SRV:-smtp.gmail.com:587}"
     printf '%s\n%s\n%s\n%s\n' "$K_USER" "$K_PW" "$K_AN" "$K_SRV" | ssh_pi "cd '$BASE' && python3 kontakt.py --konfig && rm -f kontakt.spaeter"
     unset K_PW
     K_TEST=ja

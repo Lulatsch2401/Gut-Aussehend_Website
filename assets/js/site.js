@@ -156,7 +156,7 @@
   if (kform && window.fetch) {
     var kstatus = doc.getElementById("kontakt-status");
     var ksend = kform.querySelector('button[type="submit"]');
-    var mailHinweis = 'Bitte schreiben Sie uns direkt an <a href="mailto:sponsoring@gut-aussehend.de">sponsoring@gut-aussehend.de</a>.';
+    var mailHinweis = 'Bitte schreiben Sie uns direkt an <a href="mailto:gut.aussehend.fasching@gmail.com">gut.aussehend.fasching@gmail.com</a>.';
     kform.elements.ts.value = String(Date.now());
     var zeige = function (art, html) {
       kstatus.hidden = false;

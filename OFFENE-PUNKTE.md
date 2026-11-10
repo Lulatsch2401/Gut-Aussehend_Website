@@ -32,12 +32,12 @@ Quellen:
 ## Online gehen
 
 - [ ] **Impressum füllen** (Pflicht, § 5 DDG): Name und ladungsfähige Anschrift (kein Postfach) einer Person, die Gut und Aussehend vertritt; optional Telefon. Vorlage steht in `impressum.html`, die Felder in eckigen Klammern ersetzen und den Hinweis oben entfernen. Kein Register, da kein e. V.
-- [x] Datenschutzerklärung ausformuliert (Server-Logs, Cloudflare, Kontaktformular, IONOS, localStorage, Instagram-Link, Fotos, Rechte, Aufsicht Sachsen). Vor dem Start einmal gegenlesen lassen, keine Rechtsberatung
+- [x] Datenschutzerklärung ausformuliert (Server-Logs, Cloudflare, Kontaktformular, Gmail, localStorage, Instagram-Link, Fotos, Rechte, Aufsicht Sachsen). Vor dem Start einmal gegenlesen lassen, keine Rechtsberatung
 - [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
 - [ ] Google Search Console: Domain-Property `gut-aussehend.de` anlegen, Bestätigung per DNS-TXT in Cloudflare, Sitemap `https://gut-aussehend.de/sitemap.xml` einreichen
 - [ ] Cloudflare DNS: `_dmarc`, `autodiscover`, `_domainconnect` auf „DNS only“ (graue Wolke), sonst leidet die E-Mail-Zustellung
 - [ ] Cloudflare SSL/TLS → Edge Certificates: „Minimum TLS Version“ 1.2, „Automatic HTTPS Rewrites“ an. HSTS erst nach ein paar Wochen stabilem Betrieb einschalten
-- [ ] IONOS-Postfach `sponsoring@gut-aussehend.de` anlegen und mit `--kontakt-einrichten` hinterlegen
+- [ ] Für `gut.aussehend.fasching@gmail.com` ein Gmail-App-Passwort anlegen und mit `./deploy/deploy.sh 192.168.178.25 --kontakt-einrichten` hinterlegen
 - [x] Rechtsform geklärt: kein eingetragener Verein, keine Spendenquittungen
 - [ ] Einverständnis der Gründer und aller gut erkennbaren Personen auf den Fotos
 - [ ] Mitgliederzahl bestätigen (aktuell 38)

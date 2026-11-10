@@ -70,10 +70,9 @@ Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 
 - [ ] Mitgliederzahl bestätigen (aktuell 38, aus dem Rechnungsportal)
 - [ ] Ansprechpartner im Kontakt eintragen
-- [ ] IONOS-Postfach für das Kontaktformular anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen
 - [ ] Termine 2027 prüfen: Uhrzeit Pegau, Datum Altstadttanz
-- [ ] Postfach `sponsoring@gut-aussehend.de` anlegen oder Adresse ändern
+- [ ] Für `gut.aussehend.fasching@gmail.com` ein App-Passwort anlegen und mit `--kontakt-einrichten` hinterlegen
 - [ ] Impressum ausfüllen, Datenschutzerklärung gegenlesen lassen
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
@@ -117,7 +116,9 @@ Auf dem Pi liegt nur ein Hash des Passworts (`/var/www/gut-aussehend/htpasswd`, 
 
 ### Kontaktformular
 
-Das Formular im Abschnitt Kontakt schickt an `/api/kontakt`. nginx reicht das an `deploy/kontakt.py` weiter, einen kleinen Python-Dienst auf dem Pi (`ga-kontakt`, nur Standardbibliothek, hört nur auf 127.0.0.1:8095). Er prüft die Eingaben, bremst Spam (unsichtbares Fallenfeld, Mindestzeit, höchstens 5 Nachrichten pro Stunde und Absender, 100 pro Tag) und verschickt die Nachricht per SMTP über ein IONOS-Postfach. Antworten gehen per „Antworten“ direkt an den Absender. Auf dem Pi wird nichts gespeichert.
+Gmail braucht ein App-Passwort: Google-Konto → Sicherheit → Bestätigung in zwei Schritten einschalten → „App-Passwörter“ → neues Passwort „Website“ anlegen. Dieses 16-stellige Passwort (nicht das normale Google-Passwort) beim Einrichten eingeben.
+
+Das Formular im Abschnitt Kontakt schickt an `/api/kontakt`. nginx reicht das an `deploy/kontakt.py` weiter, einen kleinen Python-Dienst auf dem Pi (`ga-kontakt`, nur Standardbibliothek, hört nur auf 127.0.0.1:8095). Er prüft die Eingaben, bremst Spam (unsichtbares Fallenfeld, Mindestzeit, höchstens 5 Nachrichten pro Stunde und Absender, 100 pro Tag) und verschickt die Nachricht per SMTP über das Gmail-Postfach. Antworten gehen per „Antworten“ direkt an den Absender. Auf dem Pi wird nichts gespeichert.
 
 - Beim ersten `deploy.sh` fragt das Skript nach Postfach, Passwort und Empfänger und schickt eine Testmail. Mit Enter lässt sich das überspringen, das Formular verweist dann auf die E-Mail-Adresse.
 - Zugang ändern: `./deploy/deploy.sh 192.168.178.25 --kontakt-einrichten`

@@ -2,7 +2,7 @@
 """Kontaktformular für gut-aussehend.de – läuft auf dem Pi, nur mit Python-Standardbibliothek.
 
 nginx leitet POST /api/kontakt an diesen Dienst weiter (nur 127.0.0.1). Er prüft die Eingaben,
-bremst Spam und schickt die Nachricht per SMTP (IONOS) an das Vereinspostfach.
+bremst Spam und schickt die Nachricht per SMTP (z. B. Gmail mit App-Passwort) an das Vereinspostfach.
 Gespeichert wird nichts, die Nachricht existiert danach nur als E-Mail.
 
   python3 kontakt.py               Dienst starten (so startet ihn systemd)
@@ -46,7 +46,7 @@ def senden(k, betreff, text, antwort_an=None):
     if antwort_an:
         msg["Reply-To"] = antwort_an
     msg.set_content(text)
-    host, port = k.get("server") or "smtp.ionos.de", int(k.get("port") or 587)
+    host, port = k.get("server") or "smtp.gmail.com", int(k.get("port") or 587)
     ctx = ssl.create_default_context()
     if port == 465:
         with smtplib.SMTP_SSL(host, port, context=ctx, timeout=20) as s:
@@ -95,7 +95,7 @@ class H(BaseHTTPRequestHandler):
             elif daten.get("fehler") == "eingabe":
                 titel, text = "Bitte prüfen", "Name, E-Mail, eine Nachricht (mindestens 10 Zeichen) und das Häkchen beim Datenschutz werden gebraucht."
             else:
-                titel, text = "Das hat nicht geklappt", "Bitte schreiben Sie uns direkt an sponsoring@gut-aussehend.de."
+                titel, text = "Das hat nicht geklappt", "Bitte schreiben Sie uns direkt an gut.aussehend.fasching@gmail.com."
             body = (f'<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
                     f'<title>{titel} – Gut und Aussehend</title><link rel="stylesheet" href="/assets/css/site.css">'
                     f'<body><main class="wrap legal"><h1 class="neon">{titel}</h1><p>{text}</p>'
@@ -178,7 +178,7 @@ def main():
         zeilen = [z.rstrip("\n") for z in sys.stdin]
         zeilen += [""] * (4 - len(zeilen))
         user, pw, an, server = zeilen[:4]
-        host, _, port = (server or "smtp.ionos.de:587").partition(":")
+        host, _, port = (server or "smtp.gmail.com:587").partition(":")
         alt = os.umask(0o077)
         with open(KONFIG, "w", encoding="utf-8") as fh:
             json.dump({"user": user, "passwort": pw, "an": an or user, "server": host, "port": int(port or 587)}, fh)
