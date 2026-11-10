@@ -1,9 +1,9 @@
-/* Gut und Aussehend – kleine Helfer für Menü, Termine, Sponsoren, Session-Auswahl und Großansicht. */
+/* Gut und Aussehend – kleine Helfer für Menü, Termine, Session-Auswahl und Großansicht. */
 (function () {
   "use strict";
   var doc = document;
   doc.documentElement.classList.add("js");
-  var data = window.GA_INHALTE || { sponsoren: [], termine: [] };
+  var data = window.GA_INHALTE || { termine: [] };
 
   function el(tag, cls, text) {
     var node = doc.createElement(tag);
@@ -48,29 +48,6 @@
       if (t.offen) li.appendChild(el("span", "chip", "Termin folgt"));
       dates.appendChild(li);
     });
-  }
-
-  /* ---- Sponsoren ---- */
-  var wall = doc.getElementById("sponsoren-wand");
-  var empty = doc.getElementById("sponsoren-leer");
-  var order = { wagen: 0, kostuem: 1, wurfmaterial: 2 };
-  if (wall && data.sponsoren && data.sponsoren.length) {
-    wall.textContent = "";
-    data.sponsoren.slice().sort(function (a, b) {
-      return (order[a.paket] || 0) - (order[b.paket] || 0);
-    }).forEach(function (s) {
-      var tile = el(s.url ? "a" : "div", "sponsors__tile");
-      if (s.url) { tile.href = s.url; tile.rel = "noopener"; tile.target = "_blank"; }
-      if (s.logo) {
-        var img = el("img");
-        img.src = s.logo; img.alt = s.name; img.loading = "lazy";
-        tile.appendChild(img);
-      } else {
-        tile.textContent = s.name;
-      }
-      wall.appendChild(tile);
-    });
-    if (empty) empty.hidden = true;
   }
 
   /* ---- Session-Auswahl: das Motto färbt die ganze Seite ----
@@ -156,7 +133,7 @@
   if (kform && window.fetch) {
     var kstatus = doc.getElementById("kontakt-status");
     var ksend = kform.querySelector('button[type="submit"]');
-    var mailHinweis = 'Bitte schreiben Sie uns direkt an <a href="mailto:gut.aussehend.fasching@gmail.com">gut.aussehend.fasching@gmail.com</a>.';
+    var mailHinweis = 'Schreib uns gern direkt an <a href="mailto:gut.aussehend.fasching@gmail.com">gut.aussehend.fasching@gmail.com</a>.';
     kform.elements.ts.value = String(Date.now());
     var zeige = function (art, html) {
       kstatus.hidden = false;
@@ -186,7 +163,7 @@
       if (!el.einwilligung.checked) fehlt.push("einwilligung");
       markiere(fehlt);
       if (fehlt.length) {
-        zeige("fehler", "Bitte füllen Sie die markierten Felder aus. Die Nachricht braucht mindestens 10 Zeichen, und das Häkchen beim Datenschutz muss gesetzt sein.");
+        zeige("fehler", "Bitte füll die markierten Felder aus. Die Nachricht braucht mindestens 10 Zeichen, und das Häkchen beim Datenschutz muss gesetzt sein.");
         return;
       }
       ksend.disabled = true; ksend.textContent = "Wird gesendet …";
@@ -200,12 +177,12 @@
       }).then(function (d) {
         if (d.ok) {
           kform.reset(); el.ts.value = String(Date.now()); markiere([]);
-          zeige("ok", "<strong>Danke!</strong> Ihre Nachricht ist angekommen. Wir melden uns bald.");
+          zeige("ok", "<strong>Danke!</strong> Deine Nachricht ist angekommen. Wir melden uns bald.");
         } else if (d.fehler === "eingabe") {
           markiere(d.felder || []);
-          zeige("fehler", "Bitte prüfen Sie die markierten Felder.");
+          zeige("fehler", "Bitte prüf die markierten Felder.");
         } else if (d.fehler === "zu_viele") {
-          zeige("fehler", "Von Ihrem Anschluss kamen gerade schon mehrere Nachrichten. Bitte versuchen Sie es später noch einmal. " + mailHinweis);
+          zeige("fehler", "Von deinem Anschluss kamen gerade schon mehrere Nachrichten. Bitte versuch es später noch einmal. " + mailHinweis);
         } else {
           zeige("fehler", "Das hat leider nicht geklappt. " + mailHinweis);
         }

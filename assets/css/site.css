@@ -27,7 +27,7 @@
   --matrix: #4dff7c;     /* nur im Abschnitt zum Wagen 2026 */
   --hazard: #ffd21f;     /* nur beim Motto Work in Progress */
   --sky: #8fd3ff;        /* nur beim Motto Up */
-  --paper: #f3f7fb;      /* helle Kacheln für Sponsorenlogos */
+  --paper: #f3f7fb;      /* helle Flächen, z. B. Sprunglink */
 
   /* Rollen, die jedes Motto neu belegt */
   --accent: var(--cyan);         /* Links, Auszeichnungen, Leuchtschrift */
@@ -285,35 +285,8 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 .chip { display: inline-block; padding: 0.2rem 0.65rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
 @media (max-width: 640px) { .dates li { grid-template-columns: minmax(0, 1fr); } .dates .chip { justify-self: start; } }
 
-/* ---------- Sponsoren ---------- */
-.sponsors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
-.sponsors__tile { display: grid; place-items: center; aspect-ratio: 3 / 2; padding: 1.2rem; border-radius: var(--radius); background: var(--paper); color: var(--paper-ink); text-decoration: none; font-weight: 700; text-align: center; }
-.sponsors__tile img { max-height: 100%; width: auto; object-fit: contain; }
-.sponsors__tile:hover { color: var(--paper-ink); box-shadow: 0 0 0 2px var(--accent); }
-.sponsors__free { display: grid; place-items: center; aspect-ratio: 3 / 2; padding: 1rem; border: 1.5px dashed var(--line); border-radius: var(--radius); color: var(--muted); font-size: var(--t-small); text-align: center; }
-@media (max-width: 760px) { .sponsors { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* ---------- Sponsor werden ---------- */
-.reasons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.2rem, 3vw, 2.4rem); }
-.reasons li { display: grid; gap: 0.4rem; align-content: start; padding-top: 1rem; border-top: 2px solid var(--accent); min-width: 0; }
-.reasons h3 { font: 700 var(--t-h3)/1.25 var(--f-body); }
-.reasons p { color: var(--muted); }
-@media (max-width: 760px) { .reasons { grid-template-columns: minmax(0, 1fr); } }
-
-.packs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin-top: clamp(2.4rem, 5vw, 3.6rem); align-items: stretch; }
-.pack { display: grid; grid-template-rows: auto auto 1fr auto; gap: 1rem; padding: 1.6rem 1.4rem; border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
-.pack--main { border-color: transparent; background: linear-gradient(var(--raised), var(--raised)) padding-box, linear-gradient(135deg, var(--accent2), var(--btn-b) 55%, var(--accent)) border-box; box-shadow: 0 0 40px rgba(var(--accent2-rgb), 0.18); }
-.pack h3 { font-family: var(--f-display); font-size: 1.7rem; color: #fff; }
-.pack__price { font-weight: 700; color: var(--accent2); }
-.pack ul { display: grid; gap: 0.55rem; align-content: start; }
-.pack li { padding-left: 1.3rem; position: relative; color: var(--ink); line-height: 1.45; }
-.pack li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-@media (max-width: 899px) { .packs { grid-template-columns: minmax(0, 1fr); } }
-
-.spend { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
-.spend li { padding: 0.45rem 0.95rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.98rem; }
 .note { margin-top: 1.2rem; }
-.subhead { font: 700 var(--t-h3)/1.25 var(--f-body); margin-top: clamp(2.4rem, 5vw, 3.6rem); }
 
 /* ---------- Kontakt ---------- */
 .contact { display: grid; gap: 1rem; padding: clamp(1.4rem, 3vw, 2rem); background: var(--raised); border-radius: var(--radius); min-width: 0; }
@@ -385,7 +358,6 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 }
 :root[data-motto="wip"] .neon { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.6); color: var(--accent); }
 :root[data-motto="wip"] .btn { border-radius: 3px; }
-:root[data-motto="wip"] .reasons li { border-top: 6px solid transparent; border-image: repeating-linear-gradient(-45deg, var(--hazard) 0 10px, #0c0c0c 10px 20px) 6; }
 
 /* 2024 · Up: Abendhimmel, Ballonfarben, runde Schrift */
 :root[data-motto="up"] {
@@ -439,7 +411,6 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 .founder > span { color: var(--muted); font-size: var(--t-small); }
 @media (max-width: 760px) { .founders { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-.sponsor-cta { margin-top: clamp(1.6rem, 4vw, 2.4rem); }
 
 /* ---------- Kontaktformular ---------- */
 .contact { gap: 1.6rem; }
@@ -469,5 +440,4 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 .kform__status--info { background: var(--deep); border: 1px solid var(--line); }
 .contact__direct { display: grid; gap: 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
 
-.sponsor-outro { margin-top: clamp(1.4rem, 3vw, 2rem); font-size: 1.1rem; max-width: 40rem; }
 .section__head .lead + .lead { margin-top: 0.8rem; }

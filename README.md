@@ -1,7 +1,7 @@
 # Website Gut und Aussehend
 
 Statische Website für gut-aussehend.de. Kein Build-Schritt, keine Abhängigkeiten, keine externen Dienste.
-Stand: Entwurf vom 07.10.2026.
+Stand: 10.11.2026. Reine Vorstellungsseite der Gruppe, ohne Sponsoring und ohne Impressum (siehe OFFENE-PUNKTE.md).
 
 ## Ansehen
 
@@ -18,30 +18,17 @@ Ein Doppelklick auf `index.html` funktioniert auch.
 | Pfad | Inhalt |
 |---|---|
 | `index.html` | Startseite mit allen Abschnitten |
-| `impressum.html`, `datenschutz.html` | Platzhalter, noch nicht rechtsgültig |
-| `assets/data/inhalte.js` | Sponsoren und Termine. Nur diese Datei ändern, die Seite baut sich daraus. |
+| `datenschutz.html` | Datenschutzerklärung |
+| `deploy/impressum-vorlage.html` | Impressum-Vorlage für später, wird nicht hochgeladen |
+| `assets/data/inhalte.js` | Termine und Instagram-Followerzahl. Nur diese Datei ändern, die Seite baut sich daraus. |
 | `assets/css/site.css` | Gestaltung. Farben und Schriften stehen oben als Variablen. |
-| `assets/js/site.js` | Menü, Termine, Sponsorenwand, Großansicht der Fotos |
+| `assets/js/site.js` | Menü, Termine, Kontaktformular, Großansicht der Fotos |
 | `assets/img/` | Fotos als WebP in zwei Größen (`-s` 800 px, `-l` groß), ohne EXIF- und GPS-Daten |
 | `assets/fonts/` | Schriften lokal eingebunden (je Motto eine eigene Überschriftenschrift), Lizenzen in `LIZENZEN.txt` |
 
 ## Nach Änderungen an CSS oder JS
 
-In `index.html`, `impressum.html` und `datenschutz.html` hängt an `site.css`, `site.js` und `inhalte.js` ein `?v=...`. Nach einer Änderung an diesen Dateien die Zahl hochsetzen (z. B. Datum), sonst zeigen Browser oft noch die alte Version aus dem Cache.
-
-## Sponsor eintragen
-
-1. Logo nach `assets/img/sponsoren/` legen (SVG oder PNG mit transparentem Hintergrund).
-2. In `assets/data/inhalte.js` einen Eintrag ergänzen:
-
-```js
-sponsoren: [
-  { name: "Musterfirma GmbH", logo: "assets/img/sponsoren/musterfirma.svg",
-    url: "https://www.example.de", paket: "wagen" }
-],
-```
-
-Sobald ein Sponsor eingetragen ist, verschwinden die leeren Felder und der Hinweis "Hier ist noch Platz".
+In `index.html` und `datenschutz.html` hängt an `site.css`, `site.js` und `inhalte.js` ein `?v=...`. Nach einer Änderung an diesen Dateien die Zahl hochsetzen (z. B. Datum), sonst zeigen Browser oft noch die alte Version aus dem Cache.
 
 ## Sessions und Mottos
 
@@ -58,7 +45,7 @@ Neues Motto ergänzen:
 
 ## Instagram
 
-Der Instagram-Kanal @gut_und_aussehend ist verlinkt im Kopf, im Aufmacher, in den Kennzahlen, in einem eigenen Abschnitt, bei den Sponsorenpaketen, im Kontakt und im Fuß. Die Followerzahl erscheint nur einmal als „Über … Follower“ im Instagram-Abschnitt und steht in `assets/data/inhalte.js` (`instagram.follower`). Die Seite bettet nichts von Instagram ein, es sind reine Links (keine Cookies, kein Datenschutz-Hinweis nötig). Die Kacheln im Abschnitt sind eigene Fotos von der Seite und führen zum Profil.
+Der Instagram-Kanal @gut_und_aussehend ist verlinkt im Kopf, im Aufmacher, in den Kennzahlen, in einem eigenen Abschnitt, im Kontakt und im Fuß. Die Followerzahl erscheint nur einmal als „Über … Follower“ im Instagram-Abschnitt und steht in `assets/data/inhalte.js` (`instagram.follower`). Die Seite bettet nichts von Instagram ein, es sind reine Links (keine Cookies, kein Datenschutz-Hinweis nötig). Die Kacheln im Abschnitt sind eigene Fotos von der Seite und führen zum Profil.
 
 ## Termin eintragen
 
@@ -73,7 +60,7 @@ Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 - [ ] Gründer: Einverständnis von Oli, Richard, Robert und Toni einholen
 - [ ] Termine 2027 prüfen: Uhrzeit Pegau, Datum Altstadttanz
 - [ ] Für `gut.aussehend.fasching@gmail.com` ein App-Passwort anlegen und mit `--kontakt-einrichten` hinterlegen
-- [ ] Impressum ausfüllen, Datenschutzerklärung gegenlesen lassen
+- [ ] Datenschutzerklärung gegenlesen lassen
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
 - [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`

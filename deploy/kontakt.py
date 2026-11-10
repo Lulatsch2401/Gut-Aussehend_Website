@@ -19,7 +19,7 @@ from urllib.parse import parse_qs, urlsplit
 HIER = os.path.dirname(os.path.abspath(__file__))
 KONFIG = os.path.join(HIER, "kontakt.json")
 PORT = int(os.environ.get("KONTAKT_PORT", "8095"))
-ANLIEGEN = {"sponsoring": "Sponsoring", "frage": "Frage zum Verein", "sonstiges": "Sonstiges"}
+ANLIEGEN = {"frage": "Frage zum Verein", "feedback": "Lob, Ideen oder Fotos", "sonstiges": "Sonstiges"}
 MAIL_RE = re.compile(r"^[^@\s<>\"',;]{1,64}@[^@\s<>\"',;]{1,190}\.[A-Za-z]{2,}$")
 PRO_IP_STUNDE, PRO_TAG = 5, 100
 
@@ -91,11 +91,11 @@ class H(BaseHTTPRequestHandler):
     def antwort(self, code, daten, formular):
         if formular:  # ohne JavaScript abgeschickt: kleine Antwortseite
             if daten.get("ok"):
-                titel, text = "Danke!", "Ihre Nachricht ist angekommen. Wir melden uns bald."
+                titel, text = "Danke!", "Deine Nachricht ist angekommen. Wir melden uns bald."
             elif daten.get("fehler") == "eingabe":
                 titel, text = "Bitte prüfen", "Name, E-Mail, eine Nachricht (mindestens 10 Zeichen) und das Häkchen beim Datenschutz werden gebraucht."
             else:
-                titel, text = "Das hat nicht geklappt", "Bitte schreiben Sie uns direkt an gut.aussehend.fasching@gmail.com."
+                titel, text = "Das hat nicht geklappt", "Schreib uns gern direkt an gut.aussehend.fasching@gmail.com."
             body = (f'<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
                     f'<title>{titel} – Gut und Aussehend</title><link rel="stylesheet" href="/assets/css/site.css">'
                     f'<body><main class="wrap legal"><h1 class="neon">{titel}</h1><p>{text}</p>'
