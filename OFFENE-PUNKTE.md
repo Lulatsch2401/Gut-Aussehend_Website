@@ -15,10 +15,20 @@ Stand: 10. November 2026. Die Seite ist eine reine Vorstellungsseite der Gruppe:
 
 | Punkt | Stand | Was zu tun ist, wenn es weitergeht |
 |---|---|---|
-| Pokal 2025 | Auf den Fotos 2025 ist ein Pokal zu sehen, Platzierung unbekannt | Platz, Kategorie und Umzug (Pegau oder Groitzsch) klären, dann wie bei 2026 als Auszeichnung im Wagen-Abschnitt 2025 ergänzen |
 | Rollen der Gründer | Unter Oli, Richard, Robert und Toni steht „Gründer“ | Bleibt so, bis jemand Rollen nennen möchte |
 | Ansprechpartner im Kontakt | Zeile vorerst entfernt | Bei Bedarf Name und Rolle im Abschnitt Kontakt ergänzen |
 | Sponsoring | Vorerst ganz von der Seite genommen | Siehe Entscheidung oben. Spendenquittungen gibt es ohnehin nicht, da kein e. V. |
+
+## Preise (Stand 16.11.2026)
+
+| Jahr | Preis | Umzug |
+|---|---|---|
+| 2024 | Sonderpreis | Karnevalsumzug des GCC Groitzsch, 11.02.2024 |
+| 2025 | 3. Platz Fahrzeuge | 60. Karnevalsumzug des GCC Groitzsch, 02.03.2025 |
+| 2026 | 3. Platz Fahrzeuge | 61. Karnevalsumzug des GCC Groitzsch, 15.02.2026 |
+| 2026 | 3. Platz große Wagen | Karnevalsumzug des PKK Pegau 2026 |
+
+Die Teller und Plaketten sonst sind Teilnahmeerinnerungen, keine Platzierungen.
 
 ## Termine 2027 (recherchiert am 7. November 2026)
 
