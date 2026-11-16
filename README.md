@@ -155,5 +155,7 @@ Alle Fotos stammen aus dem Google-Drive-Ordner `Fasching` (Auswahl in `Fasching/
 | aufbau-stapler | Altstadt Tanz 2025/IMG_5892.HEIC |
 | at26-* | Altstadt Tanz 2026/DSC_3757 bis DSC_4521 (Fotograf, Bühne bei Nacht u. a.) |
 | at25-drohne, at25-drohne2 | Altstadt Tanz 2025/118-DJI_0415.jpg, 119-DJI_0423.jpg |
-| at25-menge, at25-blasen, at25-pult, at25-dj, at25-buehne-nacht | Altstadt Tanz 2025/160-DSC_0632, 166-DSC_0653, 150-DSC_0612, 222-DSC_0805, 79-DSC_0478 |
+| at25-blasen, at25-pult, at25-dj | Altstadt Tanz 2025/166-DSC_0653, 150-DSC_0612, 222-DSC_0805 |
 | at24-* | Altstadt Tanz 2024/Pegau Altstadt Tanz 2024.zip (DSC_0623 bis DSC_1016) |
+
+Aus Datenschutzgründen entfernt (gut erkennbare Gäste, 16.11.2026): at25-menge, at25-buehne-nacht, at24-gaeste. Nicht wieder einbauen.
