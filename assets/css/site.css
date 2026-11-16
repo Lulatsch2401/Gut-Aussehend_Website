@@ -228,7 +228,9 @@ h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
 .award .shot img { height: 100%; object-fit: cover; }
 .award__place { font-family: var(--f-display); font-size: 2rem; line-height: 1.05; color: #fff; text-shadow: var(--glow-pink); }
 .award__text { display: grid; gap: 0.35rem; min-width: 0; }
-.award--text { grid-template-columns: minmax(0, 1fr); margin-top: clamp(1.2rem, 3vw, 1.8rem); }
+.awards { display: grid; gap: 1.2rem; }
+.section__head .awards { margin-top: clamp(1.4rem, 3vw, 2rem); }
+.award--tall .shot img { object-position: center top; }
 
 /* ---------- Matrix-Band (nur Motto 2026) ---------- */
 .code { position: absolute; inset: 0 0 auto 0; height: 15rem; overflow: hidden; pointer-events: none; display: flex; justify-content: space-between; padding-inline: 2vw; opacity: 0.2; -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 92%); mask-image: linear-gradient(180deg, #000 0%, transparent 92%); }
