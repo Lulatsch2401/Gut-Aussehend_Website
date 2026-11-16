@@ -91,6 +91,11 @@
       if (hash && node.id === hash) start = node.getAttribute("data-for").split(" ")[0];
     });
     applyMotto(start, false);
+
+    /* Links wie die Preise im Aufmacher wechseln vor dem Springen in die passende Session. */
+    Array.prototype.slice.call(doc.querySelectorAll("[data-goto-motto]")).forEach(function (link) {
+      link.addEventListener("click", function () { applyMotto(link.getAttribute("data-goto-motto"), true); });
+    });
   }
 
   /* ---- Großansicht der Fotos ---- */

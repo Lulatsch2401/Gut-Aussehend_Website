@@ -40,7 +40,7 @@ Neues Motto ergänzen:
 
 1. In `index.html` einen Block `<div class="motto" ...>` im Abschnitt "Wagen" kopieren und `id`, `data-motto`, `data-year`, `data-title` und den Inhalt anpassen.
 2. Im Kopf (`#motto-bar`) einen Knopf mit demselben `data-motto` ergänzen.
-3. Im Aufmacher ein Foto und einen Auszeichnungs-Link mit `data-for="neues-motto"` und `hidden` ergänzen.
+3. Im Aufmacher ein Foto mit `data-for="neues-motto"` und `hidden` ergänzen. Neue Preise oben in der Liste „Unsere Preise“ (`.hero__awards`) eintragen, mit `data-goto-motto` auf das Motto des Jahres.
 4. In `assets/css/site.css` unter "Mottos" einen Block `:root[data-motto="neues-motto"] { ... }` mit Farben und Schrift anlegen, in `assets/js/site.js` die Farbe in `themeColors` und im kleinen Skript oben in den HTML-Seiten den Namen in der Liste ergänzen.
 
 ## Instagram
