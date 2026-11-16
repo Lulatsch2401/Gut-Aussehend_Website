@@ -43,7 +43,7 @@ Quellen:
 - [x] Sponsoring und Impressum entfernt, Seite ist reine Vorstellung der Gruppe (siehe oben)
 - [x] Datenschutzerklärung ausformuliert, Verantwortlicher ohne Impressum (Server-Logs, Cloudflare, E-Mail über Gmail, localStorage, Instagram-Link, Fotos, Rechte, Aufsicht Sachsen). Vor dem Start einmal gegenlesen lassen, keine Rechtsberatung
 - [x] Passwortschutz abgeschaltet, Seite öffentlich (16.11.2026): `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
-- [ ] Google Search Console: Domain-Property `gut-aussehend.de` anlegen, Bestätigung per DNS-TXT in Cloudflare, Sitemap `https://gut-aussehend.de/sitemap.xml` einreichen
+- [x] (16.11.2026 erledigt, Indexierung beantragt) Google Search Console: Domain-Property `gut-aussehend.de` anlegen, Bestätigung per DNS-TXT in Cloudflare, Sitemap `https://gut-aussehend.de/sitemap.xml` einreichen
 - [ ] Cloudflare DNS: `_dmarc`, `autodiscover`, `_domainconnect` auf „DNS only“ (graue Wolke), sonst leidet die E-Mail-Zustellung
 - [ ] Cloudflare SSL/TLS → Edge Certificates: „Minimum TLS Version“ 1.2, „Automatic HTTPS Rewrites“ an. HSTS erst nach ein paar Wochen stabilem Betrieb einschalten
 - [x] Rechtsform geklärt: kein eingetragener Verein, keine Spendenquittungen
