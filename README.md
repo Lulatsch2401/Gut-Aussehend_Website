@@ -62,7 +62,7 @@ Die Liste aller offenen Punkte steht in [OFFENE-PUNKTE.md](OFFENE-PUNKTE.md).
 - [ ] Datenschutzerklärung gegenlesen lassen
 - [ ] Einverständnis aller erkennbaren Personen auf den Fotos einholen
 - [ ] Logo als Vektordatei besorgen (aktuell nur 420 px, daraus sind Kopf-Logo und Favicon geschnitten)
-- [ ] Passwortschutz abschalten: `./deploy/deploy.sh 192.168.178.25 --ohne-passwort`
+- [x] Passwortschutz abgeschaltet (16.11.2026)
 - [ ] Rechnungsportal absichern, bevor Namen von Mitgliedern öffentlich auf der Seite stehen
 
 ## Google und Zertifikate
