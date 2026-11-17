@@ -15,8 +15,6 @@ window.GA_INHALTE = {
     // Pegau: Datum aus dem PKK-Kalender (Bunter Fasching am 6. Februar folgt direkt auf den Umzug), Uhrzeit noch nicht veröffentlicht
     { wann: "Sa, 06.02.2027", was: "Großer Karnevalsumzug Pegau", wo: "Innenstadt Pegau, Uhrzeit folgt", offen: false },
     // Groitzsch: laut GCC und Stadt Groitzsch, Umzug ab 14:30 Uhr, Markttreiben ab 12 Uhr
-    { wann: "So, 07.02.2027", was: "Karnevalsumzug Groitzsch", wo: "Start am Markt, 14:30 Uhr", offen: false },
-    // Altstadttanz beim Pegauer Altstadtfest, bisher jeweils am ersten Septemberwochenende
-    { wann: "September 2027", was: "Altstadttanz Pegau", wo: "voraussichtlich Anfang September", offen: true }
+    { wann: "So, 07.02.2027", was: "Karnevalsumzug Groitzsch", wo: "Start am Markt, 14:30 Uhr", offen: false }
   ]
 };
